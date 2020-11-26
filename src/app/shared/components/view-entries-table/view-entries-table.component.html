@@ -1,0 +1,38 @@
+<nz-table #entryTableTag nzShowSizeChanger [nzData]="entriesQuery.entries$ | async" [nzShowPagination]="showPagination"
+          [nzLoading]="entriesQuery.selectLoading() | async" [nzTotal]="entriesState.total" nzFrontPagination="false"
+          [nzPageSize]="entriesState.ui.pageSize" [nzPageIndex]="entriesState.ui.page"
+          (nzPageIndexChange)="entriesService.updateUi({page: $event})"
+          (nzPageSizeChange)="entriesService.updateUi({pageSize: $event})">
+  <thead>
+  <tr>
+    <th *ngIf="showActions"></th>
+    <th>Category</th>
+    <th>Transaction Date</th>
+    <th>Description</th>
+    <th>Amount</th>
+    <th nzShowFilter [nzFilterMultiple]="false" [nzFilters]="banksQuery.banksForFilter$ | async"
+        (nzFilterChange)="entriesService.updateUi({bankId: $event})">Bank</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let entry of entryTable.data">
+    <td *ngIf="showActions">
+      <button nz-button (click)="editEntry.next(entry)" class="mr-1" nzType="primary">
+        <i nz-icon nzType="edit" nzTheme="outline"></i>
+      </button>
+
+      <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure delete this transaction?"
+              (nzOnConfirm)="entriesService.delete(entry)" nzType="danger">
+        <i nz-icon nzType="delete" nzTheme="outline"></i>
+      </button>
+    </td>
+    <td>{{ entry.category.name }}: {{ entry.subCategory.name }}</td>
+    <td>{{ entry.dateSpent | date: 'shortDate' }}</td>
+    <td>{{ entry.description }}</td>
+    <td>{{ entry.amount | currency }}</td>
+    <td>{{ entry.bank.name }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<app-edit-entry-modal [openModal]="editEntry.asObservable()"></app-edit-entry-modal>

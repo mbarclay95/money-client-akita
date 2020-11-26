@@ -1,0 +1,31 @@
+<ng-container *ngIf="activeCategory | getLastMonthSums | async as lastMonth">
+  <div class="d-flex justify-content-between w-100">
+
+    <div class="h-100 w-75 mt-2">
+      <nz-progress [nzPercent]="activeTotals | getPercentageSaved" nzSize="small"></nz-progress>
+    </div>
+
+    <div class="d-flex flex-column align-items-end w-100" style="font-size: 1rem;">
+
+
+      <div *ngIf="lastMonth.sum !== 0" class="font-italic">
+        {{lastMonth.sum > 0 ? '+ Goal' : '- Saved'}} from last month: {{lastMonth.sum | currency}}
+      </div>
+      <div class="font-italic">+ Goal: {{activeTotals.budget | currency}}</div>
+      <div class="font-italic">- Saved: {{activeTotals.entry | currency}}</div>
+      <div class="font-italic" style="border-top: 1px solid #999999" *ngIf="lastMonth.sum + activeTotals.budget <= activeTotals.entry">
+        You hit your goal!
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="d-flex justify-content-end w-100 mb-1" style="font-size: 1rem;"
+       *ngIf="lastMonth.sum + activeTotals.budget > activeTotals.entry">
+    <div class="font-italic
+" style="border-top: 1px solid #999999">
+      Save {{(lastMonth.sum + activeTotals.budget - activeTotals.entry) | currency}} more to hit your goal!
+    </div>
+  </div>
+</ng-container>

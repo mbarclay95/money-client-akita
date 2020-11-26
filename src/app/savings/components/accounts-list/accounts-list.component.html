@@ -1,0 +1,47 @@
+
+<div class="d-flex flex-column align-items-center w-100" style="min-height: 100%">
+
+  <ng-container *ngIf="savingsStoreService.getTotalsForSubCategories$ | async as subCategories">
+
+    <div class="d-flex justify-content-center h-100" style="align-self: flex-start; font-size: 13px">
+      Show Inactive:
+      <nz-switch (ngModelChange)="subCategoriesService.changeState({showInactive: $event})" nzSize="small"
+                 ngModel="" class="ml-2"></nz-switch>
+    </div>
+
+    <h3 class="mt-2 underline">Savings Accounts</h3>
+
+    <div class="d-flex flex-column w-100 mt-4">
+
+      <ng-container *ngIf="savingsStoreService.getActiveCategoryAsObject$ | async as active">
+
+        <div class="d-flex justify-content-between border border-radius m-2 p-3 font-weight-bold"
+             style="font-size: 1.1rem" [ngClass]="{'selected': active.active === null}"
+             (click)="savingsStoreService.updateActive(null)">
+
+          <div>Total Savings</div>
+
+          <div>{{subCategories | sumSavingsTotals | currency}}</div>
+
+        </div>
+
+        <div class="d-flex justify-content-between border border-radius m-2 p-3" *ngFor="let savingsTotal of subCategories"
+             [ngClass]="{'selected': active.active?.id === savingsTotal.subCategory.id}"
+             (click)="savingsStoreService.updateActive(savingsTotal.subCategory)">
+
+          <div>{{savingsTotal.subCategory.name}}</div>
+
+          <div class="pointer" (click)="createEntryToOpenModal(savingsTotal.subCategory)">
+            {{savingsTotal.total | currency}}</div>
+
+        </div>
+
+      </ng-container>
+
+    </div>
+
+  </ng-container>
+
+</div>
+
+<app-move-money-modal [openModal]="openMoveMoneyModal.asObservable()"></app-move-money-modal>

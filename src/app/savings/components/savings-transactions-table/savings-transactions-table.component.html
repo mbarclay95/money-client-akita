@@ -1,0 +1,46 @@
+<div>
+
+  <nz-table #entryTableTag nzSize="small" style="background: white" [nzData]="entries" [nzShowPagination]="false"
+            nzBordered nzPageSize="1000" [nzScroll]="{ y: '33vh' }" [nzLoading]="!!!entries">
+    <thead>
+    <tr>
+      <th colspan="4" class="table-title" (click)="showTransactions = !showTransactions">
+        <i *ngIf="!showTransactions" nz-icon nzType="caret-right" nzTheme="fill"></i>
+        <i *ngIf="showTransactions" nz-icon nzType="caret-down" nzTheme="fill"></i>
+        Transactions
+      </th>
+    </tr>
+    <tr *ngIf="showTransactions">
+      <th>Description</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>To</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <ng-container *ngIf="savingsStoreService.getActiveCategoryAsObject$ | async as active">
+
+      <ng-container *ngIf="entryTable && showTransactions">
+
+        <tr *ngFor="let entry of entryTable.data" class="{{(entry | isEntryPositive) ? 'positive-row' : 'negative-row'}}">
+          <td>{{entry.description}}</td>
+          <td>{{entry.dateSpent | date: 'shortDate'}}</td>
+          <td>{{(entry | isEntryPositive) ? '' : '- '}}{{entry.amount | currency}}</td>
+          <td>
+            <ng-container *ngIf="!(entry | isEntryPositive) || active.active === null">
+              {{entry.category.name}}: {{entry.subCategory.name}}
+            </ng-container>
+          </td>
+        </tr>
+
+      </ng-container>
+
+    </ng-container>
+
+    </tbody>
+
+  </nz-table>
+
+</div>
+

@@ -1,0 +1,14 @@
+<div class="chart-container">
+  <ngx-charts-line-chart
+    schemeType="ordinal"
+    [legend]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [results]="chartData"
+    [yScaleMin]="0"
+    [yAxisTickFormatting]="toCurrency"
+    (select)="onSelect($event)"
+    legendPosition="below"
+  ></ngx-charts-line-chart>
+</div>
+

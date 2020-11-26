@@ -1,0 +1,91 @@
+<ng-container *ngIf="entryBudgetWrapperQuery.getIncomeTotals$ | async as incomeTotals">
+  <ng-container *ngIf="entryBudgetWrapperQuery.getExpensesTotals$ | async as expenseTotals">
+    <ng-container *ngIf="entryBudgetWrapperQuery.getSavingsTotals$ | async as savingTotals">
+
+      <div class="d-flex justify-content-around border-left pl-1 pt-1">
+
+        <div class="d-flex align-items-center">
+
+          <ng-container *ngIf="entryBudgetWrapperQuery.getLastMonthSummedBudget$ | async as lastMonthBudget">
+
+            <div
+              class="d-flex flex-column {{((showExpectedIncome ? incomeTotals.budget : incomeTotals.entry) + lastMonthBudget.sum) - (expenseTotals.budget + savingTotals.budget) | getTextColor}}">
+
+              <div
+                class="leftover">{{((showExpectedIncome ? incomeTotals.budget : incomeTotals.entry) + lastMonthBudget.sum) - (expenseTotals.budget + savingTotals.budget) | currency}}</div>
+
+              <div class="math-rows">left to budget</div>
+
+            </div>
+
+
+            <div class="d-flex flex-column ml-3">
+
+              <div class="math-rows">
+                {{lastMonthBudget.sum < 0 ? '-' : '+'}} last month: {{lastMonthBudget.sum | absolute | currency}}
+              </div>
+              <div *ngIf="showExpectedIncome" class="math-rows">+ expected
+                income: {{incomeTotals.budget | currency}}</div>
+              <div *ngIf="!showExpectedIncome" class="math-rows">+ actual
+                income: {{incomeTotals.entry | currency}}</div>
+              <div class="math-rows">- budgeted expenses: {{expenseTotals.budget | currency}}</div>
+              <div class="math-rows">- saving goals: {{savingTotals.budget | currency}}</div>
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+        <div class="d-flex align-items-center">
+
+          <ng-container *ngIf="entryBudgetWrapperQuery.getLastMonthSummedBalance$ | async as lastMonthBalance">
+
+            <div
+              class="d-flex flex-column {{((showExpectedIncome ? incomeTotals.budget : incomeTotals.entry) + lastMonthBalance.sum) - (expenseTotals.entry + savingTotals.entry) | getTextColor}}">
+
+              <div
+                class="leftover">{{((showExpectedIncome ? incomeTotals.budget : incomeTotals.entry) + lastMonthBalance.sum) - (expenseTotals.entry + savingTotals.entry) | currency}}</div>
+
+              <div class="math-rows">balance</div>
+
+            </div>
+
+            <div class="d-flex flex-column ml-3">
+
+              <div class="math-rows">
+                {{lastMonthBalance.sum < 0 ? '-' : '+'}} last month: {{lastMonthBalance.sum | absolute | currency}}
+              </div>
+              <div *ngIf="showExpectedIncome" class="math-rows">+ expected
+                income: {{incomeTotals.budget | currency}}</div>
+              <div *ngIf="!showExpectedIncome" class="math-rows">+ actual
+                income: {{incomeTotals.entry | currency}}</div>
+              <div class="math-rows">- expenses: {{expenseTotals.entry | currency}}</div>
+              <div class="math-rows">- saved: {{savingTotals.entry | currency}}</div>
+
+            </div>
+
+          </ng-container>
+
+        </div>
+
+        <div class="d-flex flex-column align-items-end justify-content-lg-around border-left pl-1"
+             style="font-size: .8rem">
+
+          <div>
+            Show expected income
+            <nz-switch [(ngModel)]="showExpectedIncome" nzSize="small"></nz-switch>
+          </div>
+
+<!--          <div>-->
+<!--            Show expenses from savings-->
+<!--            <nz-switch nzSize="small"></nz-switch>-->
+<!--          </div>-->
+
+        </div>
+
+      </div>
+
+    </ng-container>
+  </ng-container>
+</ng-container>

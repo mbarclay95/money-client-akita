@@ -1,0 +1,20 @@
+<div class="d-flex w-100 mb-1">
+
+  <div class="d-flex flex-column align-items-end w-100" style="font-size: 1rem;">
+
+    <ng-container *ngIf="activeCategory | getLastMonthSums | async as lastMonth">
+
+      <div *ngIf="lastMonth.sum !== 0" class="font-italic">
+        {{lastMonth.sum > 0 ? '+' : '-'}} left from last month: {{lastMonth.sum | currency}}
+      </div>
+      <div class="font-italic">+ budgeted: {{activeTotals.budget | currency}}</div>
+      <div class="font-italic">- spent: {{activeTotals.entry | currency}}</div>
+      <div class="font-italic" style="border-top: 1px solid #999999">
+        available: {{(lastMonth.sum + activeTotals.budget - activeTotals.entry | currency)}}
+      </div>
+
+    </ng-container>
+
+  </div>
+
+</div>

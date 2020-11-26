@@ -1,0 +1,89 @@
+
+<div class="d-flex justify-content-start mb-4 p-2">
+
+  <div class="d-flex flex-column mr-2" style="width: 20%">
+
+    <input class="w-100 my-2 px-2" nz-input [(ngModel)]="newTemplate.name" placeholder="Enter Template Name" required>
+
+    <nz-select class="w-100 my-2" [(ngModel)]="newTemplate.bank" nzPlaceHolder="Select Bank">
+      <nz-option *ngFor="let bank of (banksQuery.banks$ | async)" [nzLabel]="bank.name"
+                 [nzValue]="bank"></nz-option>
+    </nz-select>
+
+  </div>
+
+  <div class="d-flex flex-column" style="width: 30%">
+
+    <label class="m-2" nz-checkbox [(ngModel)]="newTemplate.skipFirstRow"
+           (ngModelChange)="setManipulatedData()">Skip first row</label>
+
+    <label class="m-2" nz-checkbox [(ngModel)]="newTemplate.negateAmount" [disabled]="!newTemplate.amount"
+           (ngModelChange)="setManipulatedData()">Negate amount (Amount should be positive)</label>
+
+  </div>
+
+  <ng-container *ngIf="singleRow">
+
+    <div class="d-flex flex-column" style="width: 20%">
+
+      <label class="m-2" nz-checkbox [(ngModel)]="newTemplate.notInRows"
+             (ngModelChange)="setManipulatedData()">Data not in rows</label>
+
+      <label class="m-2" nz-checkbox [(ngModel)]="newTemplate.skipFirstDataPoint"
+             (ngModelChange)="setManipulatedData()">Skip first data point</label>
+
+    </div>
+
+    <div class="d-flex flex-column" style="width: 20%">
+
+      <label>Number Of Columns:
+        <input nz-input type="number" [(ngModel)]="newTemplate.columnsPerRow"
+               (ngModelChange)="setManipulatedData(true)" [ngModelOptions]="{updateOn: 'blur'}">
+      </label>
+
+    </div>
+
+  </ng-container>
+
+</div>
+
+<nz-table [nzData]="[true]" nzShowPagination="false">
+  <thead>
+  <tr>
+    <ng-container *ngIf="!singleRow || newTemplate.notInRows">
+      <th *ngFor="let header of manipulatedData[0] ; let i = index">
+
+        <nz-select nzAllowClear class="w-100" [(ngModel)]="optionModels[i]" nzPlaceHolder="Select Column"
+                   (ngModelChange)="selectedColumn($event, i)">
+
+          <nz-option *ngFor="let option of options" [nzLabel]="option.label" [nzValue]="option.key"
+                     [nzDisabled]="optionSelected(option.key)"></nz-option>
+        </nz-select>
+
+      </th>
+    </ng-container>
+
+    <ng-container *ngIf="singleRow && !newTemplate.notInRows">
+      <th>Please upload a file with more than 1 row</th>
+    </ng-container>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <tr *ngFor="let row of manipulatedData">
+
+    <ng-container *ngIf="!singleRow || newTemplate.notInRows">
+
+      <td *ngFor="let column of row">
+
+        {{column}}
+
+      </td>
+
+    </ng-container>
+
+  </tr>
+
+  </tbody>
+</nz-table>

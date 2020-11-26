@@ -1,0 +1,110 @@
+<div class="px-3">
+
+  <div class="d-flex justify-content-start">
+    <div class="w-100 pr-2">
+      <div class="titles mb-2">
+
+        <div>Categories</div>
+
+        <button class="ml-4" nz-button nzType="primary" (click)="createCategory()">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+
+      </div>
+      <nz-table #categoriesTableTag [nzData]="categoriesQuery.categories$ | async" nzPageSize="1000"
+                [nzShowPagination]="false">
+        <thead>
+        <tr>
+          <th>Actions</th>
+          <th>Sort</th>
+          <th>Active</th>
+          <th>Type</th>
+          <th>Name</th>
+        </tr>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="categoryDropped($event)">
+        <tr *ngFor="let category of categoriesTable.data" cdkDrag style="cursor: pointer"
+            [ngClass]="{'selected': activeCategory.id === category.id}"
+            (click)="categoriesService.setActive(category.id)">
+          <td>
+
+            <button (click)="openCategoryModal.next(category)" nz-button nzType="primary">
+              <i class="icon-padding" nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+
+            <button nz-popconfirm nzPopconfirmTitle="Are you sure delete this category?"
+                    (nzOnConfirm)="deleteCategory(category)" class="ml-1" nz-button nzType="danger">
+              <i class="icon-padding" nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+
+          </td>
+          <td>{{category.sort}}</td>
+          <td>
+            <label nz-checkbox (ngModelChange)="categoriesService.updateState(category, {isActive: $event})"
+                   [ngModel]="category.isActive"></label>
+          </td>
+          <td class="font-italic">
+            <ng-container *ngIf="category.savings">Savings</ng-container>
+            <ng-container *ngIf="category.income">Income</ng-container>
+            <ng-container *ngIf="!category.savings && !category.income">Expense</ng-container>
+          </td>
+          <td>
+            <ng-container>{{category.name}}</ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="w-100 pl-2">
+
+      <div class="titles mb-2">
+
+        <div>Sub-Categories for {{activeCategory?.name}}</div>
+
+        <button class="ml-4" nz-button nzType="primary" (click)="createSubCategory()">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+
+      </div>
+
+      <nz-table #subCategoriesTableTag [nzData]="activeCategory | subCategoriesByCategory | async" nzPageSize="1000"
+                [nzShowPagination]="false">
+        <thead>
+        <tr>
+          <th>Actions</th>
+          <th>Sort</th>
+          <th>Active</th>
+          <th>Name</th>
+        </tr>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="subCategoryDropped($event)">
+        <tr *ngFor="let subCategory of subCategoriesTable.data" cdkDrag>
+          <td>
+
+            <button (click)="openSubCategoryModal.next(subCategory)" nz-button nzType="primary">
+              <i class="icon-padding" nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+
+            <button nz-popconfirm nzPopconfirmTitle="Are you sure delete this category?"
+                    (nzOnConfirm)="subCategoriesService.delete(subCategory)" class="ml-1" nz-button nzType="danger">
+              <i class="icon-padding" nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+
+          <td>{{subCategory.sort}}</td>
+          <td>
+            <label nz-checkbox (ngModelChange)="subCategoriesService.updateState(subCategory, {isActive: $event})"
+                   [ngModel]="subCategory.isActive"></label>
+          </td>
+          <td>
+            <ng-container>{{subCategory.name}}</ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+</div>
+
+<app-create-edit-category [openModal]="openCategoryModal.asObservable()"></app-create-edit-category>
+<app-create-edit-sub-category [openModal]="openSubCategoryModal.asObservable()"></app-create-edit-sub-category>

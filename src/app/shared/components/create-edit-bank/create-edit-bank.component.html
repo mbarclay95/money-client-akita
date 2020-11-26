@@ -1,0 +1,17 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Mapping" (nzOnCancel)="isVisible = false" (nzOnOk)="saveBank()"
+          nzMaskClosable="false" [nzOkLoading]="banksQuery.selectLoading() | async" nzOkText="Save"
+          [nzCancelLoading]="banksQuery.selectLoading() | async" [nzOkDisabled]="bank && bank.name === ''">
+
+  <div class="d-flex flex-column w-100" *ngIf="bank">
+
+    <div class="w-100">
+      Name
+
+      <input nz-input class="w-100" [(ngModel)]="bank.name">
+
+    </div>
+
+  </div>
+
+</nz-modal>
+

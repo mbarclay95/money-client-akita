@@ -1,0 +1,24 @@
+
+.table-title {
+  font-size: 1rem !important;
+}
+
+tr, td, th {
+  padding: 1px 5px !important;
+}
+
+td, th {
+  flex: 1 1 25% !important;
+  width: 25% !important;
+  font-size: .8rem !important;
+}
+
+.content {
+  text-align: center;
+}
+
+.budget-input{
+  width: 75%;
+  font-size: .8rem;
+  height: 20px;
+}

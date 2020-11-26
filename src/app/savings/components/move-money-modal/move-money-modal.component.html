@@ -1,0 +1,48 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Move money out of ' + entry?.fromSavingsSubCategory?.name"
+          [nzStyle]="{ right: '22vw', position: 'absolute' }" nzWidth="35vw"
+          (nzOnCancel)="isVisible = false" (nzOnOk)="saveEntry()" [nzOkLoading]="entriesQuery.selectLoading() | async"
+          [nzCancelLoading]="entriesQuery.selectLoading() | async" [nzOkDisabled]="!isEntryCompleted()">
+
+  <div class="d-flex flex-column w-100" *ngIf="entry">
+
+    <div class="w-100">
+      <div>Move To Account</div>
+
+      <nz-select [ngModel]="entry.subCategory" (ngModelChange)="setCategoryAndSubCategory($event)" class="w-100" nzShowSearch>
+
+        <nz-option *ngFor="let subCategory of subCategoriesQuery.savingsSubCategories$ | async | removeCurrentSubCategory: entry.fromSavingsSubCategory"
+                   [nzValue]="subCategory" [nzLabel]="subCategory.name"></nz-option>
+
+      </nz-select>
+
+    </div>
+
+    <div class="w-100 mt-2">
+      <div>Bank</div>
+
+      <nz-select [(ngModel)]="entry.bank.id" class="w-100" nzShowSearch>
+
+        <nz-option *ngFor="let bank of (banksQuery.banks$ | async)" [nzValue]="bank.id" [nzLabel]="bank.name"></nz-option>
+
+      </nz-select>
+
+    </div>
+
+    <div class="w-100 mt-2">
+      <div>Amount</div>
+
+      <input nz-input currencyMask [(ngModel)]="entry.amount" [options]="{align: 'left'}">
+
+    </div>
+
+    <div class="w-100 mt-2">
+      <div>Description (optional)</div>
+
+      <input nz-input [(ngModel)]="entry.description">
+
+    </div>
+
+  </div>
+
+</nz-modal>
+

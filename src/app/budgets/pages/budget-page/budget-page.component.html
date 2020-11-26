@@ -1,0 +1,36 @@
+<div class="d-flex flex-column" style="height: 100%;">
+
+  <div class="d-flex justify-content-start align-items-center border-bottom" style="height: 5%; margin-top: -5px">
+
+    <app-date-filter class="w-25 h-100"></app-date-filter>
+
+    <app-over-view class="w-75 h-100"></app-over-view>
+
+  </div>
+
+  <div class="d-flex justify-content-start" style="height: 95%">
+
+    <div class="d-flex flex-column h-100 border-right" style="width: 60%; overflow-y: auto">
+
+      <app-income-table [activeCategory]="activeCategory"></app-income-table>
+
+      <app-expenses-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)"
+                          [activeCategory]="activeCategory"></app-expenses-table>
+
+      <app-savings-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)"
+                         [activeCategory]="activeCategory"></app-savings-table>
+
+    </div>
+
+    <div class="d-flex pl-1" style="width: 40%">
+
+      <app-in-depth-view class="w-100"></app-in-depth-view>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-money-budget-money-modal [openModalEvent]="openMoveMoneyModal.asObservable()"></app-money-budget-money-modal>
+

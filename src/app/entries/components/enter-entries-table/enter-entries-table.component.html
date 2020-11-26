@@ -1,0 +1,66 @@
+
+<nz-table #entryTableTag [nzData]="enterEntriesStoreService?.entries" [nzNoResult]="['']" nzSize="small"
+          nzShowPagination="false" nzPageSize="100000">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Category</th>
+    <th>Amount</th>
+    <th>Transaction Date</th>
+    <th>Description (optional)</th>
+    <th>Bank</th>
+    <th>From Savings</th>
+  </tr>
+  </thead>
+  <tbody *ngIf="entryTable.data?.length > 0">
+  <tr *ngFor="let entry of entryTable.data" [ngClass]="{'completed': isEntryCompleted(entry), 'in-progress': !isEntryCompleted(entry)}">
+    <td>
+      <button nz-button (click)="removeEntry(entry.id)" nzType="primary" nzDanger>
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+      </button>
+      <button nz-button class="ml-1" nzType="primary" (click)="createNewMapping(entry)">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>
+      </button>
+    </td>
+    <td>
+
+      <app-category-select *ngIf="!entry.category?.id || entry.subCategory?.id" [subCategory]="entry.subCategory"
+                           (selectedSubCategory)="setCategoryAndSubCategory($event, entry)"></app-category-select>
+
+      <div class="pointer" (click)="setOpenEntry(entry.id)" *ngIf="entry.category?.id && !entry.subCategory?.id">
+        {{entry.category?.name}}:
+      </div>
+
+    </td>
+    <td>
+      <input nz-input placeholder="Enter amount" currencyMask [options]="{align: 'left'}" [(ngModel)]="entry.amount"
+             style="width: 120px;">
+    </td>
+    <td>
+      <nz-date-picker [(ngModel)]="entry.dateSpent" [nzFormat]="'MM/dd/yyyy'"></nz-date-picker>
+    </td>
+    <td>
+      <input nz-input placeholder="Enter description" [(ngModel)]="entry.description">
+    </td>
+    <td>
+      <nz-select [(ngModel)]="entry.bank.id" style="min-width: 110px;" nzPlaceHolder="Select bank" nzShowSearch>
+        <nz-option *ngFor="let bank of (bankQuery.banks$ | async)" [nzValue]="bank.id" [nzLabel]="bank.name"></nz-option>
+      </nz-select>
+    </td>
+    <td>
+
+      <nz-select [(ngModel)]="entry.fromSavingsSubCategory" style="min-width: 110px;" nzPlaceHolder="Select Category"
+                 nzAllowClear>
+
+        <nz-option *ngFor="let subCategory of subCategoriesQuery.activeSavingsSubCategories$ | async"
+                   [nzValue]="subCategory" [nzLabel]="subCategory.name"></nz-option>
+
+      </nz-select>
+
+    </td>
+  </tr>
+  </tbody>
+
+</nz-table>
+
+<app-mapping-modal [openModal]="openMappingModal.asObservable()"></app-mapping-modal>

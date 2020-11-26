@@ -1,0 +1,12 @@
+
+<div class="d-flex flex-column">
+
+  <ng-container *ngIf="savingsStoreService.getSavingsDetailsForActive$ | async as details">
+
+    <app-sums-graph [data]="details.sums"></app-sums-graph>
+
+    <app-savings-transactions-table [entries]="details.entries"></app-savings-transactions-table>
+
+  </ng-container>
+
+</div>

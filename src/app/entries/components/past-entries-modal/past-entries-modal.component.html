@@ -1,0 +1,13 @@
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Upload Transactions" (nzOnCancel)="isVisible = false" [nzOkText]="null"
+          [nzCancelText]="'Close'" nzWidth="80vw">
+
+  <div class="">
+
+    <app-view-entries-table [showPagination]="false" [showActions]="false"
+                            [entriesState]="entriesQuery.select() | async"></app-view-entries-table>
+
+
+  </div>
+
+</nz-modal>

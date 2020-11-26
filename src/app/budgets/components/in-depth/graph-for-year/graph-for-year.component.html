@@ -1,0 +1,13 @@
+<div class="chart-container">
+  <ngx-charts-line-chart
+    [scheme]="colorScheme"
+    [legend]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [results]="chartData"
+    [yScaleMin]="0"
+    [yAxisTickFormatting]="toCurrency"
+    (select)="onSelect($event)"
+  ></ngx-charts-line-chart>
+</div>
+

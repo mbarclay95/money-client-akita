@@ -1,0 +1,26 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Mapping" (nzOnCancel)="isVisible = false" (nzOnOk)="saveMapping()"
+          nzMaskClosable="false" [nzOkLoading]="mappingsQuery.selectLoading() | async" [nzCancelText]="null"
+          [nzOkDisabled]="!newMapping?.description || !newMapping?.subCategory?.id">
+
+  <div class="d-flex flex-column w-100" *ngIf="newMapping">
+
+    <div class="d-flex flex-column">
+
+      <div>Category</div>
+
+      <app-category-select [subCategory]="newMapping.subCategory"
+                           (selectedSubCategory)="setCategoryAndSubCategory($event)"></app-category-select>
+
+    </div>
+
+
+    <div class="mt-2">
+      Description
+
+      <input nz-input [(ngModel)]="newMapping.description">
+
+    </div>
+
+  </div>
+
+</nz-modal>

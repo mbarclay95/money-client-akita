@@ -1,0 +1,26 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Move money from ' + budget?.subCategory?.name"
+          [nzStyle]="{ right: '5vw', top: '15vh', position: 'absolute' }" nzWidth="35vw" nzMaskClosable="false"
+          (nzOnCancel)="isVisible = false" (nzOnOk)="saveBudget()" [nzOkLoading]="budgetsQuery.selectLoading() | async"
+          [nzCancelLoading]="budgetsQuery.selectLoading() | async" [nzOkDisabled]="!this.moveToBudget || !amount">
+
+  <div class="d-flex flex-column w-100" *ngIf="budget">
+
+    <div class="w-100">
+      <div>Move Money To</div>
+
+      <app-category-select (selectedSubCategory)="setCategoryAndSubCategory($event)"
+                           [showIncomeSubCategories]="false"></app-category-select>
+
+    </div>
+
+    <div class="w-100 mt-2">
+      <div>Amount</div>
+
+      <input nz-input currencyMask [(ngModel)]="amount" [options]="{align: 'left'}">
+
+    </div>
+
+  </div>
+
+</nz-modal>
+

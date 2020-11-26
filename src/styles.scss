@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.ant-table-tbody > tr:hover > td {
+  background: unset;
+}
+
+.anticon {
+  vertical-align: 0 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.border-radius {
+  border-radius: 5px;
+}
+
+.selected-row {
+  background: #DDDDDD;
+}
+
+.hidden-select {
+  width: 0;
+  height: 0;
+
+  .ant-select-selector {
+    padding: 0 !important;
+  }
+}

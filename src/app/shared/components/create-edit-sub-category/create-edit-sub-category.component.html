@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Mapping" (nzOnCancel)="isVisible = false" (nzOnOk)="saveSubCategory()"
+          nzMaskClosable="false" [nzOkLoading]="subCategoriesQuery.selectLoading() | async" nzOkText="Save"
+          [nzCancelLoading]="subCategoriesQuery.selectLoading() | async"
+          [nzOkDisabled]="subCategory && subCategory.name === ''">
+
+  <div class="d-flex flex-column w-100" *ngIf="subCategory">
+
+    <div class="w-100">
+      Name
+
+      <input nz-input class="w-100" [(ngModel)]="subCategory.name">
+
+    </div>
+
+  </div>
+
+</nz-modal>
+

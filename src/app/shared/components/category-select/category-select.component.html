@@ -1,0 +1,39 @@
+
+<ng-container *ngIf="!showIncomeSubCategories">
+
+  <nz-select nzShowSearch [ngModel]="subCategory" [compareWith]="compareSubCategories" style="width: 100%"
+             (ngModelChange)="selectedSubCategory.emit($event)" nzPlaceHolder="Select Category">
+
+    <nz-option-group *ngFor="let category of categoriesQuery.activeNoIncomeCategories$ | async"
+                     [nzLabel]="category.name">
+
+      <nz-option *ngFor="let subCategory of category | subCategoryValueByCategory: true: includeAll"
+                 nzCustomContent [nzLabel]="category.name + ': ' + subCategory.name" [nzValue]="subCategory">
+        {{subCategory.name}}
+      </nz-option>
+
+    </nz-option-group>
+
+  </nz-select>
+
+</ng-container>
+
+<ng-container *ngIf="showIncomeSubCategories">
+
+  <nz-select nzShowSearch [ngModel]="subCategory" [compareWith]="compareSubCategories" style="width: 100%"
+             (ngModelChange)="selectedSubCategory.emit($event)" nzPlaceHolder="Select Category">
+
+    <nz-option-group *ngFor="let category of categoriesQuery.activeCategories$ | async" [nzLabel]="category.name">
+
+      <nz-option *ngFor="let subCategory of category | subCategoryValueByCategory: true: includeAll"
+                 nzCustomContent [nzLabel]="category.name + ': ' + subCategory.name" [nzValue]="subCategory">
+        {{subCategory.name}}
+      </nz-option>
+
+    </nz-option-group>
+
+  </nz-select>
+
+</ng-container>
+
+

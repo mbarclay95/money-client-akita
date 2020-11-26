@@ -1,0 +1,74 @@
+
+<div class="px-3">
+
+  <div class="titles">
+
+    <div>Banks</div>
+
+    <button class="ml-4" nz-button nzType="primary" (click)="createBank()">
+      <i class="icon-padding" nz-icon nzType="plus" nzTheme="outline"></i>
+    </button>
+
+  </div>
+
+  <nz-table #bankTableTag class="mt-4" [nzLoading]="false" [nzData]="banksQuery.banks$ | async"
+            nzPageSize="1000" [nzShowPagination]="false" nzSize="small">
+    <thead>
+    <tr>
+      <th>Actions</th>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let bank of bankTable.data">
+      <td>
+
+              <button (click)="openBankModal.next(bank)" nz-button nzType="primary">
+                <i class="icon-padding" nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+
+              <button nz-popconfirm nzPopconfirmTitle="Are you sure delete this bank?"
+                      (nzOnConfirm)="banksService.delete(bank)" class="ml-1" nz-button nzType="danger">
+                <i class="icon-padding" nz-icon nzType="delete" nzTheme="outline"></i>
+              </button>
+
+      </td>
+      <td>{{bank.name}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <div class="titles mt-5">
+
+    <div>Upload Templates</div>
+
+  </div>
+
+  <nz-table #templateTableTag class="mt-4" [nzLoading]="false" [nzData]="uploadTemplatesQuery.templates$ | async"
+            nzPageSize="1000" [nzShowPagination]="false" nzSize="small">
+    <thead>
+    <tr>
+      <th>Actions</th>
+      <th>Name</th>
+      <th>Bank</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let template of templateTable.data">
+      <td>
+
+        <button nz-popconfirm nzPopconfirmTitle="Are you sure delete this template?"
+                (nzOnConfirm)="uploadTemplatesService.delete(template)" class="ml-1" nz-button nzType="danger">
+          <i class="icon-padding" nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+
+      </td>
+      <td>{{template.name}}</td>
+      <td>{{template.bank?.name}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>
+
+<app-create-edit-bank [openModal]="openBankModal.asObservable()"></app-create-edit-bank>

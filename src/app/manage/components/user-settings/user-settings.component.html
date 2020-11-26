@@ -1,0 +1,44 @@
+
+<div class="px-3">
+
+  <h3 class="mb-4">User Settings</h3>
+
+  <ng-container *ngIf="authQuery.select() | async as user">
+
+    <div class="d-flex flex-column w-25">
+
+      <div class="my-2">
+
+        Initial Savings Amount
+        <input nz-input [ngModel]="user.initialAmount" [ngModelOptions]="{updateOn: 'blur'}" currencyMask
+               [options]="{align: 'left'}" (ngModelChange)="authService.update({initialAmount: $event})">
+
+      </div>
+
+      <div class="my-2">
+
+        Initial Savings Date
+        <nz-date-picker class="w-100" [ngModel]="user.initialDate" [ngModelOptions]="{updateOn: 'blur'}"
+                        (ngModelChange)="authService.update({initialDate: $event})"></nz-date-picker>
+
+      </div>
+
+      <div class="my-2">
+
+        Initial Savings Category
+        <nz-select class="w-100" (ngModelChange)="authService.update({initialSubCategoryId: $event})"
+                   [ngModel]="user.initialSubCategoryId" >
+
+          <nz-option *ngFor="let subCategory of subCategoriesQuery.activeSavingsSubCategories$ | async"
+                     [nzLabel]="subCategory.name" [nzValue]="subCategory.id"></nz-option>
+
+        </nz-select>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>
+

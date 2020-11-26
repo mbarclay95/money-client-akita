@@ -1,0 +1,64 @@
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Upload Transactions" (nzOnCancel)="isVisible = false" (nzOnOk)="handleOk()"
+          [nzOkDisabled]="isDisabled()" [nzOkLoading]="loading" [nzCancelText]="null"
+          nzOkText="Upload" nzWidth="80vw" nzMaskClosable="false">
+
+  <div class="d-flex flex-column w-100 h-100 mb-2">
+
+    <ng-container *ngIf="!createNewTemplate">
+
+      <div class="d-flex w-100">
+
+        <nz-upload class="w-100" nzType="drag" [nzMultiple]="false" [nzAction]="getUploadPath()" nzAccept=".csv"
+                   (nzChange)="handleChange($event)" [nzDisabled]="!!fileUpload">
+
+          <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+          </p>
+
+          <p class="ant-upload-text">Click or drag file to this area to upload</p>
+          <p class="ant-upload-hint">
+            Currently only accept .csv files
+          </p>
+
+        </nz-upload>
+
+      </div>
+
+
+      <div class="d-flex justify-content-center mt-5 align-items-center">
+
+        <div class="mx-3">
+
+          <button nz-button (click)="selectNewTemplate()" [nzType]="selectedTemplate?.id === 0 ? 'primary' : 'default'">
+            <i nz-icon nzType="file-add" nzTheme="outline"></i>Create new template
+          </button>
+
+        </div>
+
+        <div class="mx-3">or</div>
+
+        <div class="mx-3">
+
+          <nz-select [(ngModel)]="selectedTemplate" nzPlaceHolder="Select a Template" style="min-width: 160px">
+
+            <nz-option *ngFor="let template of uploadTemplatesQuery.templates$ | async" [nzLabel]="template.name"
+                       [nzValue]="template"></nz-option>
+
+          </nz-select>
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="createNewTemplate">
+
+      <app-create-new-template [newTemplate]="selectedTemplate" [uploadedData]="uploadedData"></app-create-new-template>
+
+    </ng-container>
+
+  </div>
+
+</nz-modal>

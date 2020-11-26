@@ -1,0 +1,18 @@
+.table-title {
+  font-size: 1rem !important;
+  cursor: pointer;
+}
+
+tr, td, th {
+  padding: 1px 5px !important;
+}
+
+td, th {
+  flex: 1 1 33.33% !important;
+  width: 33.33% !important;
+  font-size: .8rem !important;
+}
+
+.content {
+  text-align: center;
+}

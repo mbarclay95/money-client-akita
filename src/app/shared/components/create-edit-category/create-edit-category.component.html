@@ -1,0 +1,17 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Mapping" (nzOnCancel)="isVisible = false" (nzOnOk)="saveCategory()"
+          nzMaskClosable="false" [nzOkLoading]="categoriesQuery.selectLoading() | async" nzOkText="Save"
+          [nzCancelLoading]="categoriesQuery.selectLoading() | async" [nzOkDisabled]="category && category.name === ''">
+
+  <div class="d-flex flex-column w-100" *ngIf="category">
+
+    <div class="w-100">
+      Name
+
+      <input nz-input class="w-100" [(ngModel)]="category.name">
+
+    </div>
+
+  </div>
+
+</nz-modal>
+

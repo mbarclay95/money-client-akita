@@ -1,0 +1,83 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Mapping" (nzOnCancel)="isVisible = false" (nzOnOk)="saveEntry()"
+          nzMaskClosable="false" [nzOkLoading]="entriesQuery.selectLoading() | async"
+          [nzCancelLoading]="entriesQuery.selectLoading() | async" [nzOkDisabled]="!isEntryCompleted()">
+
+  <div class="d-flex flex-column w-100" *ngIf="entry">
+
+    <div class="d-flex justify-content-start w-100">
+
+      <div class="w-50">
+        <div>Category</div>
+
+        <app-category-select [subCategory]="entry.subCategory"
+                             (selectedSubCategory)="setCategoryAndSubCategory($event)"></app-category-select>
+      </div>
+
+
+      <div class="w-50 ml-2">
+        Transaction Date
+
+        <nz-date-picker class="w-100" [(ngModel)]="entry.dateSpent" [nzFormat]="'MM/dd/yyyy'"></nz-date-picker>
+
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-start mt-3 w-100">
+
+      <div class="w-50">
+        Amount
+
+        <input class="w-100" nz-input currencyMask [(ngModel)]="entry.amount" [options]="{align: 'left'}">
+
+      </div>
+
+
+      <div class="w-50 ml-2">
+        <div>Bank</div>
+
+        <nz-select [(ngModel)]="entry.bank.id" class="w-100" nzPlaceHolder="Select bank" nzShowSearch>
+          <nz-option *ngFor="let bank of (banksQuery.banks$ | async)" [nzValue]="bank.id" [nzLabel]="bank.name"></nz-option>
+        </nz-select>
+
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-start mt-3 w-50">
+
+      <div class="w-100">
+
+        <div>From Savings Category</div>
+
+        <nz-select [(ngModel)]="entry.fromSavingsSubCategory" class="w-100" nzPlaceHolder="Select Category"
+                   nzAllowClear [compareWith]="compareSubCategories">
+
+          <nz-option *ngFor="let subCategory of subCategoriesQuery.activeSavingsSubCategories$ | async"
+                     [nzValue]="subCategory" [nzLabel]="subCategory.name"></nz-option>
+
+        </nz-select>
+
+      </div>
+
+
+    </div>
+
+    <div class="d-flex justify-content-start mt-3 w-100">
+
+      <div class="w-100">
+
+        Description
+
+        <input class="w-100" nz-input [(ngModel)]="entry.description">
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+</nz-modal>
+

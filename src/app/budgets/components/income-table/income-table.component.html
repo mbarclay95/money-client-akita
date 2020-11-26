@@ -1,0 +1,97 @@
+<div class="w-100 p-2">
+
+  <nz-table nzSize="small" [nzData]="[true]" [nzShowPagination]="false" nzBordered>
+
+    <thead>
+
+    <tr (click)="makeIncomeCategoryActive()">
+      <th rowspan="2" (click)="showIncome = !showIncome" class="table-title pointer">
+        <i *ngIf="!showIncome" nz-icon nzType="caret-right" nzTheme="fill"></i>
+        <i *ngIf="showIncome" nz-icon nzType="caret-down" nzTheme="fill"></i>
+        Income
+      </th>
+      <th class="content">Estimated</th>
+      <th class="content">Actual</th>
+    </tr>
+
+    <tr>
+      <ng-container *ngIf="(entryBudgetWrapperQuery.getIncomeTotals$ | async) as totals">
+
+        <th class="content">{{totals.budget | currency}}</th>
+        <th class="content">{{totals.entry | currency}}</th>
+
+      </ng-container>
+    </tr>
+
+    </thead>
+
+    <tbody *ngIf="showIncome">
+
+    <ng-container *ngIf="categoriesQuery.incomeCategories$ | async as incomeCategories">
+
+      <ng-container *ngFor="let category of incomeCategories">
+
+        <tr (click)="inDepthStoreService.newActiveCategory(category)" *ngIf="incomeCategories.length > 1"
+            class="category-row pointer" [ngClass]="{'selected-row': activeCategory | isSelectedCategory: category.id}">
+
+          <td>
+            <i *ngIf="!category.showInBudget" nz-icon nzType="caret-right" nzTheme="fill"
+               (click)="categoriesService.updateState(category, {showInBudget: !category.showInBudget})"></i>
+            <i *ngIf="category.showInBudget" nz-icon nzType="caret-down" nzTheme="fill"
+               (click)="categoriesService.updateState(category, {showInBudget: !category.showInBudget})"></i>
+            {{category.name}}
+          </td>
+
+
+          <ng-container *ngIf="category | getCategoryTotals | async as categoryTotals">
+
+            <td class="content">{{categoryTotals.budget | currency}}</td>
+            <td class="content">{{categoryTotals.entry | currency}}</td>
+
+          </ng-container>
+
+        </tr>
+
+        <ng-container *ngIf="incomeCategories.length <= 1 || category.showInBudget">
+
+          <tr *ngFor="let subCategory of category | subCategoriesByCategory | async" class="pointer"
+              (click)="inDepthStoreService.newActiveCategory(subCategory)"
+              [ngClass]="{'selected-row': activeCategory | isSelectedSubCategory: subCategory.id}">
+
+            <ng-container *ngIf="subCategory | getSubCategoryTotals | async as subCategoryTotals">
+
+              <ng-container *ngIf="subCategory.isActive || subCategoryTotals.entry > 0">
+
+                <td>{{subCategory.name}}</td>
+
+                <td class="content">
+                  <input nz-input nzSize="small"
+                         (ngModelChange)="entryBudgetWrapperService.updateBudget(subCategoryTotals.budget, $event)"
+                         [ngModel]="subCategoryTotals.budget.amount" [ngModelOptions]="{updateOn: 'blur'}"
+                         currencyMask [options]="{align: 'left'}" class="budget-input">
+                </td>
+                <td class="content">
+                  <i *ngIf="subCategoryTotals.budget.amount !== subCategoryTotals.entry" nz-icon class="mr-2 pointer"
+                     nzType="left-square"
+                     nzTheme="outline"
+                     (click)="entryBudgetWrapperService.updateBudget(subCategoryTotals.budget, subCategoryTotals.entry)"></i>
+                  {{subCategoryTotals.entry | currency}}
+                </td>
+
+              </ng-container>
+
+            </ng-container>
+
+          </tr>
+
+        </ng-container>
+
+      </ng-container>
+
+    </ng-container>
+
+    </tbody>
+
+  </nz-table>
+
+</div>

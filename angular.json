@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/theme.less",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "money-client-akita"
+    }
+  },
+  "defaultProject": "money-client-akita",
+  "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
 }

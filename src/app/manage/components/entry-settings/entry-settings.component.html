@@ -1,0 +1,7 @@
+<div class="px-3">
+
+  <h3 class="mb-4">Transaction History</h3>
+
+  <app-view-entries-table [entriesState]="entriesQuery.select() | async" [showPagination]="true"></app-view-entries-table>
+
+</div>
