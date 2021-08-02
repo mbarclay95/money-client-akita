@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InDepthStoreService} from '../../../../services/budgets/in-depth-store.service';
+import {SummedEntry} from '../../../interfaces/summed-entries';
 
 @Component({
   selector: 'app-stats-for-year',
@@ -7,11 +7,10 @@ import {InDepthStoreService} from '../../../../services/budgets/in-depth-store.s
   styleUrls: ['./stats-for-year.component.scss']
 })
 export class StatsForYearComponent implements OnInit {
+  @Input() summedEntries: SummedEntry[];
   @Input() verbiage: string;
 
-  constructor(
-    public inDepthStoreService: InDepthStoreService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

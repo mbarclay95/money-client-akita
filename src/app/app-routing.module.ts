@@ -12,16 +12,22 @@ import {ManagePageComponent} from './manage/pages/manage-page/manage-page.compon
 import {MappingsModule} from './mappings/mappings.module';
 import {SavingsModule} from './savings/savings.module';
 import {SavingsPageComponent} from './savings/pages/savings-page/savings-page.component';
+import {ReportsPageComponent} from './reports/pages/reports-page/reports-page.component';
+import {ReportsModule} from './reports/reports.module';
+import {SpendingPageComponent} from './spending/pages/spending-page/spending-page.component';
+import {SpendingModule} from './spending/spending.module';
 
 const routes: Routes = [
   {
     path: '', resolve: {InitialLoadResolver}, children: [
-      {path: '', redirectTo: 'login', pathMatch: 'full'},
+      {path: '', redirectTo: 'add-transactions', pathMatch: 'full'},
       {path: 'login', component: LoginPageComponent},
       {path: 'add-transactions', component: EnterEntriesPageComponent},
+      {path: 'spending', component: SpendingPageComponent},
       {path: 'budget', component: BudgetPageComponent},
       {path: 'manage', component: ManagePageComponent},
       {path: 'savings', component: SavingsPageComponent},
+      {path: 'reports', component: ReportsPageComponent},
     ]
   },
 
@@ -35,7 +41,9 @@ const routes: Routes = [
     BudgetsModule,
     ManageModule,
     MappingsModule,
-    SavingsModule
+    SavingsModule,
+    ReportsModule,
+    SpendingModule
   ],
   exports: [
     RouterModule

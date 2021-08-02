@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
 import {QueryEntity} from '@datorama/akita';
-import {BudgetsStore, BudgetsState} from './budgets.store';
+import {BudgetsState, BudgetsStore} from './budgets.store';
 import {Observable} from 'rxjs';
 import {Budget, createBudget} from './budget.model';
 import {map} from 'rxjs/operators';
-import {Entry} from '../../entries/state/entry.model';
 import {SubCategory} from '../../sub-categories/state/sub-category.model';
-import {Category} from '../../categories/state/category.model';
 
 @Injectable({providedIn: 'root'})
 export class BudgetsQuery extends QueryEntity<BudgetsState> {

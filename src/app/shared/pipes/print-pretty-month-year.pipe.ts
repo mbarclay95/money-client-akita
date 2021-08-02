@@ -6,7 +6,7 @@ import * as dayjs from 'dayjs';
 })
 export class PrintPrettyMonthYearPipe implements PipeTransform {
 
-  transform(date: { month: number, year: number }, ...args: unknown[]): unknown {
+  transform(date: { month: number, year: number }, ...args: unknown[]): string {
     return dayjs().month(date.month).format('MMM') + ' ' + date.year;
   }
 

@@ -1,22 +1,35 @@
 import { Injectable } from '@angular/core';
-import {Entry, isEntryCompleted} from '../../entries/state/entry.model';
+import {createEntry, Entry, isEntryCompleted} from '../../entries/state/entry.model';
 import {SubCategory} from '../../sub-categories/state/sub-category.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {map, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnterEntriesStoreService {
   entries: Entry[];
+  loading = false;
 
-  constructor() { }
+  focusNewEntry: Subject<number> = new Subject<number>();
 
-  initEntries(): void {
-    this.entries = [];
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  async initEntries(): Promise<void> {
+    this.loading = true;
+    await this.http.get<Entry[]>(`${environment.apiUrl}/entries?incomplete=1`).pipe(
+      map(o => o.map(e => createEntry(e))),
+      tap(o => this.entries = o)
+    ).toPromise();
+    this.loading = false;
   }
 
   addEntry(entry: Entry): void {
     this.entries.push(entry);
-    console.log(this.entries);
   }
 
   addSubCategory(entryId: number, subCategory: SubCategory): void {
@@ -27,6 +40,10 @@ export class EnterEntriesStoreService {
 
       return e;
     });
+  }
+
+  focusEntry(entryId: number): void {
+    this.focusNewEntry.next(entryId);
   }
 
   removeEntry(entryId: number): void {

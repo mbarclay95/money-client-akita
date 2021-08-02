@@ -10,6 +10,7 @@ import {AuthService} from '../auth/state/auth.service';
 import {UploadTemplatesService} from '../upload-templates/state/upload-templates.service';
 import {MappingsService} from '../mappings/state/mappings.service';
 import {BanksService} from '../banks/state/banks.service';
+import {SpendingService} from '../services/spending/spending.service';
 
 @Injectable({ providedIn: 'root' })
 export class InitialLoadResolver implements Resolve<void>{
@@ -24,6 +25,7 @@ export class InitialLoadResolver implements Resolve<void>{
     private mappingsService: MappingsService,
     private banksService: BanksService,
     private entriesService: EntriesService,
+    private spendingService: SpendingService,
   ) {
   }
 
@@ -36,5 +38,6 @@ export class InitialLoadResolver implements Resolve<void>{
     await this.mappingsService.get();
     await this.banksService.get();
     this.entriesService.listenToUi();
+    this.spendingService.listenToUi();
   }
 }

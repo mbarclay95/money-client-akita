@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import * as dayjs from 'dayjs';
 import {UniqueYearsService} from '../unique-years.service';
-import {filter} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,10 @@ import {filter} from 'rxjs/operators';
 export class DateFilterStoreService {
   private dateSubject: BehaviorSubject<{month: number, year: number}> = new BehaviorSubject<{month: number, year: number}>({month: dayjs().month(), year: dayjs().year()});
   date: Observable<{month: number, year: number}> = this.dateSubject.asObservable();
+
+  datePrintPretty$: Observable<string> = this.date.pipe(
+    map(date => dayjs().month(date.month).format('MMM') + ' ' + date.year)
+  );
 
   months: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   years: number[];

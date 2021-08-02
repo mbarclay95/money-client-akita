@@ -7,7 +7,7 @@
   <nz-select nzPlaceHolder="Select month" style="width: 100px" [ngModel]="(dateFilterStoreService.date | async)?.month"
              (ngModelChange)="dateFilterStoreService.changeMonth($event)">
 
-    <nz-option *ngFor="let month of dateFilterStoreService?.months" [nzValue]="month" [nzLabel]="month | getMonthName"></nz-option>
+    <nz-option *ngFor="let month of dateFilterStoreService?.months" [nzValue]="month" [nzLabel]="month | monthName"></nz-option>
 
   </nz-select>
 

@@ -1,0 +1,30 @@
+<div class="d-flex flex-column" style="height: 100%;">
+
+  <div class="d-flex justify-content-start align-items-center border-bottom" style="min-height: 50px; margin-top: -5px">
+
+    <app-date-filter class="w-25 h-100"></app-date-filter>
+
+  </div>
+
+  <div class="d-flex justify-content-start" style="height: 95%" *ngIf="spendingUiService.ui$ | async as ui">
+
+    <div class="d-flex flex-column h-100 border-right" style="width: 40%; overflow-y: auto">
+
+      <app-totals [ui]="ui"></app-totals>
+
+      <div class="w-100 my-1" style="border-top: 1px solid black"></div>
+
+      <app-category-list [ui]="ui"></app-category-list>
+
+    </div>
+
+    <div class="d-flex pl-1" style="width: 60%">
+
+      <app-selected-details class="w-100" [ui]="ui"></app-selected-details>
+
+    </div>
+
+  </div>
+
+</div>
+

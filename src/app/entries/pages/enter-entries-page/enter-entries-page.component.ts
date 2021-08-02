@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriesQuery} from '../../../categories/state/categories.query';
 import {CategoriesService} from '../../../categories/state/categories.service';
 import {SubCategoriesQuery} from '../../../sub-categories/state/sub-categories.query';
-import {SubCategoriesService} from '../../../sub-categories/state/sub-categories.service';
 import {SubCategory} from '../../../sub-categories/state/sub-category.model';
 import {EntriesService} from '../../state/entries.service';
 import {createEntry} from '../../state/entry.model';
@@ -26,7 +25,6 @@ export class EnterEntriesPageComponent implements OnInit {
     public categoriesQuery: CategoriesQuery,
     public categoriesService: CategoriesService,
     public subCategoriesQuery: SubCategoriesQuery,
-    public subCategoriesService: SubCategoriesService,
     public entriesService: EntriesService,
     public enterEntriesStoreService: EnterEntriesStoreService,
     public entriesQuery: EntriesQuery
@@ -44,6 +42,7 @@ export class EnterEntriesPageComponent implements OnInit {
 
   selectSubCategory(subCategory: SubCategory): void {
     this.enterEntriesStoreService.addSubCategory(this.tempId, subCategory);
+    this.enterEntriesStoreService.focusEntry(this.tempId);
     this.tempId++;
     this.selectedCategory = null;
   }

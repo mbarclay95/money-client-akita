@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
-import { DateFilterComponent } from './components/date-filter/date-filter.component';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {FormsModule} from '@angular/forms';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import { GetMonthNamePipe } from './pipes/get-month-name.pipe';
 import { IncomeTableComponent } from './components/income-table/income-table.component';
 import {NzTableModule} from 'ng-zorro-antd/table';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
@@ -21,15 +19,11 @@ import { GetSubCategoryTotalsPipe } from './pipes/get-sub-category-totals.pipe';
 import { GetCategoryTotalsPipe } from './pipes/get-category-totals.pipe';
 import {SharedModule} from '../shared/shared.module';
 import { InDepthViewComponent } from './components/in-depth/in-depth-view/in-depth-view.component';
-import { PrintPrettyMonthYearPipe } from './pipes/in-depth/print-pretty-month-year.pipe';
 import { SavingsMonthComponent } from './components/in-depth/savings-month/savings-month.component';
 import {NzProgressModule} from 'ng-zorro-antd/progress';
 import { GetPercentageSavedPipe } from './pipes/in-depth/get-percentage-saved.pipe';
 import { IncomeMonthComponent } from './components/in-depth/income-month/income-month.component';
 import { ExpensesMonthComponent } from './components/in-depth/expenses-month/expenses-month.component';
-import { TransactionsTableComponent } from './components/in-depth/transactions-table/transactions-table.component';
-import { StatsForYearComponent } from './components/in-depth/stats-for-year/stats-for-year.component';
-import { GetSumOfSummedEntriesPipe } from './pipes/in-depth/get-sum-of-summed-entries.pipe';
 import { GetVerbiageForActivePipe } from './pipes/in-depth/get-verbiage-for-active.pipe';
 import { GraphForYearComponent } from './components/in-depth/graph-for-year/graph-for-year.component';
 import {LineChartModule} from '@swimlane/ngx-charts';
@@ -52,8 +46,6 @@ import { MoneyBudgetMoneyModalComponent } from './components/money-budget-money-
 @NgModule({
   declarations: [
     BudgetPageComponent,
-    DateFilterComponent,
-    GetMonthNamePipe,
     IncomeTableComponent,
     GetEditableBudgetPipe,
     ExpensesTableComponent,
@@ -64,14 +56,10 @@ import { MoneyBudgetMoneyModalComponent } from './components/money-budget-money-
     GetSubCategoryTotalsPipe,
     GetCategoryTotalsPipe,
     InDepthViewComponent,
-    PrintPrettyMonthYearPipe,
     SavingsMonthComponent,
     GetPercentageSavedPipe,
     IncomeMonthComponent,
     ExpensesMonthComponent,
-    TransactionsTableComponent,
-    StatsForYearComponent,
-    GetSumOfSummedEntriesPipe,
     GetVerbiageForActivePipe,
     GraphForYearComponent,
     IsSelectedCategoryPipe,
@@ -82,6 +70,8 @@ import { MoneyBudgetMoneyModalComponent } from './components/money-budget-money-
     GetLastMonthSumsPipe,
     GetEntriesByActiveCategoryPipe,
     MoneyBudgetMoneyModalComponent
+  ],
+  exports: [
   ],
   imports: [
     CommonModule,

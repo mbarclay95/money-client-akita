@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EntriesStore, EntryUiState} from './entries.store';
 import {createEntry, Entry} from './entry.model';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, map, switchMap, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {DateFilterStoreService} from '../../services/budgets/date-filter-store.service';
 import {Category} from '../../categories/state/category.model';
@@ -42,11 +42,14 @@ export class EntriesService {
   async saveEntries(entries: Entry[]): Promise<void> {
     await this.http.post<Entry[]>(`${environment.apiUrl}/entries`, {entries}).pipe(
       setLoading(this.entriesStore),
-      tap(() => this.enterEntriesStoreService.clearEntries())
+      tap(() => {
+        this.enterEntriesStoreService.clearEntries();
+        this.enterEntriesStoreService.initEntries();
+      })
     ).toPromise();
   }
 
-  async getYearEntrySums(month: number, year: number, active: Category|SubCategory): Promise<SummedEntry[]> {
+  async getYearEntrySums(month: number, year: number, active: Category | SubCategory): Promise<SummedEntry[]> {
     const startDate: string = dayjs().date(1).month(month).year(year - 1).format('YYYY-MM-DD');
     const endDate: string = dayjs().date(1).month(month).year(year).format('YYYY-MM-DD');
 
@@ -63,7 +66,7 @@ export class EntriesService {
     return this.http.get<Entry[]>(`${environment.apiUrl}/upload-template/${templateId}/process-upload/${fileId}`).pipe(
       map(o => o.map(e => {
         tempId++;
-        return createEntry({ ...e, ...{id: tempId}});
+        return createEntry({...e, ...{id: tempId}});
       }))
     );
   }
@@ -74,6 +77,7 @@ export class EntriesService {
 
   listenToUi(): void {
     this.entriesQuery.getUi$.pipe(
+      debounceTime(100),
       map(() => this.entriesQuery.buildQueryString()),
       switchMap(queryString => this.getPagedEntries(queryString))
     ).subscribe();

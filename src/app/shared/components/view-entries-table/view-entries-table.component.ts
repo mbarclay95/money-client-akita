@@ -6,6 +6,7 @@ import {Entry} from '../../../entries/state/entry.model';
 import {EntriesService} from '../../../entries/state/entries.service';
 import {BanksQuery} from '../../../banks/state/banks.query';
 import {Subject} from 'rxjs';
+import {SubCategoriesQuery} from '../../../sub-categories/state/sub-categories.query';
 
 @Component({
   selector: 'app-view-entries-table',
@@ -23,7 +24,8 @@ export class ViewEntriesTableComponent implements OnInit {
   constructor(
     public entriesQuery: EntriesQuery,
     public entriesService: EntriesService,
-    public banksQuery: BanksQuery
+    public banksQuery: BanksQuery,
+    public subCategoriesQuery: SubCategoriesQuery
   ) { }
 
   ngOnInit(): void {

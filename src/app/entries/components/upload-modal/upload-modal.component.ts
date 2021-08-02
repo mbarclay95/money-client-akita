@@ -36,7 +36,11 @@ export class UploadModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
-    ).subscribe(() => this.isVisible = true);
+    ).subscribe(() => {
+      this.fileUpload = null;
+      this.selectedTemplate = null;
+      this.isVisible = true;
+    });
   }
 
   ngOnDestroy(): void {

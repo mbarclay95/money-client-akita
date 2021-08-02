@@ -1,18 +1,16 @@
-import {Component, OnInit, EventEmitter, Output, ViewChild} from '@angular/core';
-import {EntriesQuery} from '../../state/entries.query';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Entry, isEntryCompleted} from '../../state/entry.model';
 import {NzTableComponent} from 'ng-zorro-antd/table';
-import {EntriesService} from '../../state/entries.service';
 import {CategoriesService} from '../../../categories/state/categories.service';
 import {BanksQuery} from '../../../banks/state/banks.query';
-import {BanksService} from '../../../banks/state/banks.service';
 import {EnterEntriesStoreService} from '../../../services/entries/enter-entries-store.service';
 import {SubCategoriesQuery} from '../../../sub-categories/state/sub-categories.query';
 import {CategoriesQuery} from '../../../categories/state/categories.query';
-import {createSubCategory, SubCategory} from '../../../sub-categories/state/sub-category.model';
-import {createCategory} from '../../../categories/state/category.model';
+import {SubCategory} from '../../../sub-categories/state/sub-category.model';
 import {Subject} from 'rxjs';
 import {createMapping, Mapping} from '../../../mappings/state/mapping.model';
+import {Bank} from '../../../banks/state/bank.model';
+import {filter, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-enter-entries-table',
@@ -25,6 +23,8 @@ export class EnterEntriesTableComponent implements OnInit {
   openEntry: number;
   openMappingModal: Subject<Mapping> = new Subject<Mapping>();
 
+  private subscriptionDestroyer: Subject<void> = new Subject<void>();
+
   constructor(
     public categoriesService: CategoriesService,
     public subCategoriesQuery: SubCategoriesQuery,
@@ -34,7 +34,15 @@ export class EnterEntriesTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // this.subscribeToFocus();
   }
+
+  // subscribeToFocus(): void {
+  //   this.enterEntriesStoreService.focusNewEntry.asObservable().pipe(
+  //     filter(entryId => !isNaN(entryId)),
+  //     takeUntil(this.subscriptionDestroyer)
+  //   ).subscribe(entryId => console.log(this.entryTable));
+  // }
 
   removeEntry(entryId: number): void {
     this.removedEntry.emit(entryId);
@@ -61,5 +69,33 @@ export class EnterEntriesTableComponent implements OnInit {
   createNewMapping(entry: Entry): void {
     const mapping = createMapping({id: 0, category: entry.category, subCategory: entry.subCategory, description: entry.description});
     this.openMappingModal.next(mapping);
+  }
+
+  compareBanks(a: Bank, b: Bank): boolean {
+    if (!!!a || !!!b) {
+      return false;
+    }
+
+    return a.id === b.id;
+  }
+
+  compareSavingsCategory(a: SubCategory, b: SubCategory): boolean {
+    if (!!!a || !!!b) {
+      return false;
+    }
+
+    return a.id === b.id;
+  }
+
+  onTab(index: number, property: string): void {
+    if (index === 0) {
+      return;
+    }
+
+    if ((this.enterEntriesStoreService.entries[index][property] ?? null) !== null) {
+      return;
+    }
+
+    this.enterEntriesStoreService.entries[index][property] = this.enterEntriesStoreService.entries[index - 1][property];
   }
 }

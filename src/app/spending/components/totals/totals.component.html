@@ -1,0 +1,45 @@
+<div class="w-100" *ngIf="spendingService.wrappedAmounts$ | async as wrappedAmounts">
+
+  <div class="d-flex justify-content-between border border-radius m-2 p-3"
+       *ngIf="categoriesQuery.getIncomeCategoryId() as incomeCategoryId" style="font-size: 1.1rem"
+       [ngClass]="{'selected': ui.categoryId === incomeCategoryId}"
+       (click)="spendingUiService.updateCategory({categoryId: incomeCategoryId})">
+
+    <div>+ Income</div>
+
+    <div>{{wrappedAmounts.income | currency}}</div>
+
+  </div>
+
+  <div class="d-flex justify-content-between border border-radius m-2 p-3"
+       style="font-size: 1.1rem" [ngClass]="{'selected': ui.allExpenses}"
+       (click)="spendingUiService.updateCategory({allExpenses: true})">
+
+    <div>- Expenses</div>
+
+    <div>{{wrappedAmounts.expenses | currency}}</div>
+
+  </div>
+
+  <div class="d-flex justify-content-between border border-radius m-2 p-3"
+       *ngIf="categoriesQuery.getSavingsCategoryId() as savingsCategoryId" style="font-size: 1.1rem"
+       [ngClass]="{'selected': ui.categoryId === savingsCategoryId}"
+       (click)="spendingUiService.updateCategory({categoryId: savingsCategoryId})">
+
+    <div>- Savings</div>
+
+    <div>{{wrappedAmounts.savings | currency}}</div>
+
+  </div>
+
+  <div class="d-flex justify-content-between border border-radius m-2 p-3 font-weight-bold"
+       style="font-size: 1.1rem" [ngClass]="{'selected': ui.all}"
+       (click)="spendingUiService.updateCategory({all: true})">
+
+    <div>Profit</div>
+
+    <div>{{wrappedAmounts.profit | currency}}</div>
+
+  </div>
+
+</div>

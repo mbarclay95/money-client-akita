@@ -1,6 +1,6 @@
 
 <nz-table #entryTableTag [nzData]="enterEntriesStoreService?.entries" [nzNoResult]="['']" nzSize="small"
-          nzShowPagination="false" nzPageSize="100000">
+          nzShowPagination="false" nzPageSize="100000" [nzLoading]="enterEntriesStoreService.loading">
   <thead>
   <tr>
     <th></th>
@@ -12,16 +12,24 @@
     <th>From Savings</th>
   </tr>
   </thead>
+
   <tbody *ngIf="entryTable.data?.length > 0">
-  <tr *ngFor="let entry of entryTable.data" [ngClass]="{'completed': isEntryCompleted(entry), 'in-progress': !isEntryCompleted(entry)}">
+
+  <tr *ngFor="let entry of entryTable.data ; let i = index"
+      [ngClass]="{'completed': isEntryCompleted(entry), 'in-progress': !isEntryCompleted(entry)}">
+
     <td>
+
       <button nz-button (click)="removeEntry(entry.id)" nzType="primary" nzDanger>
         <i nz-icon nzType="close" nzTheme="outline"></i>
       </button>
+
       <button nz-button class="ml-1" nzType="primary" (click)="createNewMapping(entry)">
         <i nz-icon nzType="plus" nzTheme="outline"></i>
       </button>
+
     </td>
+
     <td>
 
       <app-category-select *ngIf="!entry.category?.id || entry.subCategory?.id" [subCategory]="entry.subCategory"
@@ -32,25 +40,40 @@
       </div>
 
     </td>
+
     <td>
+
       <input nz-input placeholder="Enter amount" currencyMask [options]="{align: 'left'}" [(ngModel)]="entry.amount"
-             style="width: 120px;">
+             style="width: 120px;" autofocus>
+
     </td>
+
     <td>
-      <nz-date-picker [(ngModel)]="entry.dateSpent" [nzFormat]="'MM/dd/yyyy'"></nz-date-picker>
+
+      <nz-date-picker [(ngModel)]="entry.dateSpent" [nzFormat]="'MM/dd/yyyy'"
+                      (keydown.tab)="onTab(i, 'dateSpent')"></nz-date-picker>
+
     </td>
+
     <td>
+
       <input nz-input placeholder="Enter description" [(ngModel)]="entry.description">
+
     </td>
+
     <td>
-      <nz-select [(ngModel)]="entry.bank.id" style="min-width: 110px;" nzPlaceHolder="Select bank" nzShowSearch>
-        <nz-option *ngFor="let bank of (bankQuery.banks$ | async)" [nzValue]="bank.id" [nzLabel]="bank.name"></nz-option>
+
+      <nz-select [(ngModel)]="entry.bank" style="min-width: 110px;" nzPlaceHolder="Select bank" nzShowSearch
+                 [compareWith]="compareBanks" (keydown.tab)="onTab(i, 'bank')">
+        <nz-option *ngFor="let bank of (bankQuery.banks$ | async)" [nzValue]="bank" [nzLabel]="bank.name"></nz-option>
       </nz-select>
+
     </td>
+
     <td>
 
       <nz-select [(ngModel)]="entry.fromSavingsSubCategory" style="min-width: 110px;" nzPlaceHolder="Select Category"
-                 nzAllowClear>
+                 nzAllowClear [compareWith]="compareSavingsCategory">
 
         <nz-option *ngFor="let subCategory of subCategoriesQuery.activeSavingsSubCategories$ | async"
                    [nzValue]="subCategory" [nzLabel]="subCategory.name"></nz-option>
@@ -58,7 +81,9 @@
       </nz-select>
 
     </td>
+
   </tr>
+
   </tbody>
 
 </nz-table>

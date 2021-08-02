@@ -12,6 +12,7 @@ export interface Entry {
   amount: number;
   dateSpent: Date;
   description: string;
+  isIncomplete: boolean;
   bank: Bank;
 }
 
@@ -23,15 +24,16 @@ export function createEntry(params: Partial<Entry>): Entry {
     amount: isNaN(params.amount) ? null : Number(params.amount),
     dateSpent: params.dateSpent ? new Date(params.dateSpent) : null,
     description: params.description ?? null,
-    category: createCategory(params.category ?? {}),
-    subCategory: createSubCategory(params.subCategory ?? {}),
+    category: !!params.category ? createCategory(params.category) : null,
+    subCategory: !!params.subCategory ? createSubCategory(params.subCategory) : null,
     fromSavingsSubCategory: params.fromSavingsSubCategory ? createSubCategory(params.fromSavingsSubCategory) : null,
-    bank: createBank(params.bank ?? {})
+    bank: !!params.bank ? createBank(params.bank) : null,
+    isIncomplete : params.isIncomplete
   } as Entry;
 }
 
 export function isEntryCompleted(entry: Partial<Entry>): boolean {
-  return !!entry.subCategory.id && !!entry.amount && entry.amount >= 0 && entry.dateSpent instanceof Date && !!entry.bank.id;
+  return !!entry.subCategory && !!entry.amount && entry.amount >= 0 && entry.dateSpent instanceof Date && !!entry.bank;
 }
 
 export function isSavingsEntryPositive(entry: Entry, activeSubCategory: SubCategory): boolean {

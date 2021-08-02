@@ -23,6 +23,14 @@ import { CreateEditCategoryComponent } from './components/create-edit-category/c
 import { CreateEditSubCategoryComponent } from './components/create-edit-sub-category/create-edit-sub-category.component';
 import { RemoveCurrentSubCategoryPipe } from './pipes/remove-current-sub-category.pipe';
 import { CreateEditBankComponent } from './components/create-edit-bank/create-edit-bank.component';
+import { DateFilterComponent } from './components/date-filter/date-filter.component';
+import { MonthNamePipe } from './pipes/month-name.pipe';
+import { SubCategoryTotalsPipe } from './pipes/sub-category-totals.pipe';
+import { ReduceCategoryTotalPipe } from './pipes/reduce-category-total.pipe';
+import { PrintPrettyMonthYearPipe } from './pipes/print-pretty-month-year.pipe';
+import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
+import { StatsForYearComponent } from './components/stats-for-year/stats-for-year.component';
+import { SumOfSummedEntriesPipe } from './pipes/sum-of-summed-entries.pipe';
 
 
 
@@ -39,6 +47,14 @@ import { CreateEditBankComponent } from './components/create-edit-bank/create-ed
       CreateEditSubCategoryComponent,
       RemoveCurrentSubCategoryPipe,
       CreateEditBankComponent,
+      DateFilterComponent,
+      MonthNamePipe,
+      SubCategoryTotalsPipe,
+      ReduceCategoryTotalPipe,
+      PrintPrettyMonthYearPipe,
+      TransactionsTableComponent,
+      StatsForYearComponent,
+      SumOfSummedEntriesPipe,
     ],
   exports: [
     HeaderComponent,
@@ -51,6 +67,12 @@ import { CreateEditBankComponent } from './components/create-edit-bank/create-ed
     CreateEditSubCategoryComponent,
     RemoveCurrentSubCategoryPipe,
     CreateEditBankComponent,
+    DateFilterComponent,
+    SubCategoryTotalsPipe,
+    ReduceCategoryTotalPipe,
+    PrintPrettyMonthYearPipe,
+    TransactionsTableComponent,
+    StatsForYearComponent,
   ],
   imports: [
     CommonModule,

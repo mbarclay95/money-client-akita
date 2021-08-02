@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {SummedEntry} from '../../../interfaces/summed-entries';
+import {SummedEntry} from '../../interfaces/summed-entries';
 
 @Pipe({
-  name: 'getSumOfSummedEntries'
+  name: 'sumOfSummedEntries'
 })
-export class GetSumOfSummedEntriesPipe implements PipeTransform {
+export class SumOfSummedEntriesPipe implements PipeTransform {
 
   transform(summedEntries: SummedEntry[], ...args: unknown[]): number {
     return summedEntries.reduce((prev, curr) => {

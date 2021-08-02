@@ -44,6 +44,20 @@ export class SubCategoriesQuery extends QueryEntity<SubCategoriesState> {
     }))
   );
 
+  categoriesForFilter$: Observable<{ text: string, value: string }[]> = this.selectAll().pipe(
+    map(subCategories => subCategories
+      .sort((a, b) => {
+        if (a.category.id === b.category.id) {
+          return a.id > b.id ? 1 : -1;
+        }
+
+        return a.category.id > b.category.id ? 1 : -1;
+      })
+      .map(subCategory => {
+      return { text: subCategory.name, value: subCategory.id.toString() };
+    }))
+  );
+
   constructor(
     protected store: SubCategoriesStore,
     private categoriesQuery: CategoriesQuery

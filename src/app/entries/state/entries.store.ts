@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Entry } from './entry.model';
-import {ActiveState, EntityState, EntityStore, StoreConfig} from '@datorama/akita';
+import {Injectable} from '@angular/core';
+import {Entry} from './entry.model';
+import {ActiveState, EntityState, EntityStore, setLoading, StoreConfig} from '@datorama/akita';
 
 export interface EntriesState extends EntityState<Entry, number>, ActiveState {
   total: number;
@@ -12,12 +12,19 @@ export interface EntryUiState {
   page: number;
   search: string;
   bankId: number;
+  subCategoryId: number;
 }
 
-export const uiInitialState: EntryUiState = {pageSize: 10, page: 1, search: '', bankId: null};
+export const uiInitialState: EntryUiState = {
+  pageSize: 20,
+  page: 1,
+  search: '',
+  bankId: null,
+  subCategoryId: null
+};
 
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'entries' })
+@Injectable({providedIn: 'root'})
+@StoreConfig({name: 'entries'})
 export class EntriesStore extends EntityStore<EntriesState> {
 
 
@@ -34,4 +41,5 @@ export class EntriesStore extends EntityStore<EntriesState> {
   }
 
 }
+
 

@@ -6,7 +6,7 @@
 
     <div class="d-flex flex-column w-100 p-2 mt-2 view-containers">
 
-      <div class="mb-1">{{ dateFilterStoreService.date | async | printPrettyMonthYear }}:</div>
+      <div class="mb-1">{{ dateFilterStoreService.datePrintPretty$ | async }}:</div>
 
       <ng-container *ngIf="inDepthStoreService.activeCategoryTotals$ | async as activeTotals">
 
@@ -32,7 +32,8 @@
 
     <div class="d-flex flex-column w-100 p-2 mt-2 view-containers">
 
-        <app-stats-for-year [verbiage]="getVerbiage(activeCategory)"></app-stats-for-year>
+        <app-stats-for-year [verbiage]="getVerbiage(activeCategory)"
+                            [summedEntries]="inDepthStoreService.summedEntries$ | async"></app-stats-for-year>
 
         <app-graph-for-year></app-graph-for-year>
 

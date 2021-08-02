@@ -15,7 +15,6 @@ export class EntrySettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.entriesService.listenToUi();
   }
 
 }

@@ -1,0 +1,28 @@
+<div class="d-flex flex-column w-100" *ngIf="spendingUiService.categoryVerbiage$ | async as verbiage">
+
+  <app-selected-stats [selectedCategory]="spendingUiService.selectedCategory$ | async" [all]="ui.all"
+                      [allExpenses]="ui.allExpenses" [verbiage]="verbiage"></app-selected-stats>
+
+
+<!--    <div *ngIf="activeCategory | subCategoryHasGoals as goals" class="d-flex flex-column w-100 p-2 mt-2 view-containers">-->
+
+<!--      <app-goals [goals]="goals"></app-goals>-->
+
+<!--    </div>-->
+
+    <div class="d-flex flex-column w-100 p-2 mt-2 view-containers">
+
+      <app-stats-for-year [summedEntries]="(spendingService.summedEntries$ | async).sums"
+                          [verbiage]="verbiage"></app-stats-for-year>
+
+      <app-last-year-graph></app-last-year-graph>
+
+    </div>
+
+  <div class="d-flex flex-column w-100 p-2 mt-2 view-containers">
+
+    <app-transactions-table></app-transactions-table>
+
+  </div>
+
+</div>

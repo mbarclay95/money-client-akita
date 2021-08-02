@@ -41,4 +41,12 @@ export class CategoriesQuery extends QueryEntity<CategoriesState> {
     super(store);
   }
 
+  getIncomeCategoryId(): number {
+    return this.getAll().find(category => category.isActive && category.income)?.id;
+  }
+
+  getSavingsCategoryId(): number {
+    return this.getAll().find(category => category.isActive && category.savings)?.id;
+  }
+
 }

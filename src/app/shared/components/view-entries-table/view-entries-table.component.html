@@ -1,17 +1,18 @@
 <nz-table #entryTableTag nzShowSizeChanger [nzData]="entriesQuery.entries$ | async" [nzShowPagination]="showPagination"
           [nzLoading]="entriesQuery.selectLoading() | async" [nzTotal]="entriesState.total" nzFrontPagination="false"
-          [nzPageSize]="entriesState.ui.pageSize" [nzPageIndex]="entriesState.ui.page"
+          [nzPageSize]="entriesState.ui.pageSize" [nzPageIndex]="entriesState.ui.page" nzSize="small"
           (nzPageIndexChange)="entriesService.updateUi({page: $event})"
           (nzPageSizeChange)="entriesService.updateUi({pageSize: $event})">
   <thead>
   <tr>
     <th *ngIf="showActions"></th>
-    <th>Category</th>
+    <th nzShowFilter [nzFilterMultiple]="false" [nzFilters]="subCategoriesQuery.categoriesForFilter$ | async"
+        (nzFilterChange)="entriesService.updateUi({subCategoryId: $event})" [nzFilterFn]="true">Category</th>
     <th>Transaction Date</th>
     <th>Description</th>
     <th>Amount</th>
     <th nzShowFilter [nzFilterMultiple]="false" [nzFilters]="banksQuery.banksForFilter$ | async"
-        (nzFilterChange)="entriesService.updateUi({bankId: $event})">Bank</th>
+        (nzFilterChange)="entriesService.updateUi({bankId: $event})" [nzFilterFn]="true">Bank</th>
   </tr>
   </thead>
   <tbody>

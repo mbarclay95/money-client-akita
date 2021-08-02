@@ -5,6 +5,14 @@
 
   <div class="d-flex flex-column w-100 h-100 mb-2">
 
+    <div class="d-flex justify-content-end w-100 mb-3">
+
+      <button nz-button (click)="selectNewTemplate()" [nzType]="selectedTemplate?.id === 0 ? 'primary' : 'default'">
+        <i nz-icon nzType="file-add" nzTheme="outline"></i>Create new template
+      </button>
+
+    </div>
+
     <ng-container *ngIf="!createNewTemplate">
 
       <div class="d-flex w-100">
@@ -30,17 +38,7 @@
 
         <div class="mx-3">
 
-          <button nz-button (click)="selectNewTemplate()" [nzType]="selectedTemplate?.id === 0 ? 'primary' : 'default'">
-            <i nz-icon nzType="file-add" nzTheme="outline"></i>Create new template
-          </button>
-
-        </div>
-
-        <div class="mx-3">or</div>
-
-        <div class="mx-3">
-
-          <nz-select [(ngModel)]="selectedTemplate" nzPlaceHolder="Select a Template" style="min-width: 160px">
+          <nz-select [(ngModel)]="selectedTemplate" nzPlaceHolder="Select a Template" style="min-width: 300px">
 
             <nz-option *ngFor="let template of uploadTemplatesQuery.templates$ | async" [nzLabel]="template.name"
                        [nzValue]="template"></nz-option>

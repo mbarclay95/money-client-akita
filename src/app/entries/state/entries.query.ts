@@ -48,7 +48,11 @@ export class EntriesQuery extends QueryEntity<EntriesState> {
     }
 
     if (uiState.search) {
-      queryString += `index=${uiState.search}&`;
+      queryString += `search=${uiState.search}&`;
+    }
+
+    if (uiState.subCategoryId) {
+      queryString += `subCategoryId=${uiState.subCategoryId}&`;
     }
 
     return queryString;
@@ -69,21 +73,6 @@ export function entriesByCategory(categoryId: number): <T>(source: Observable<En
     map(o => o.filter(e => e.category.id === categoryId))
   );
 }
-
-// export function entriesByCategory(categories: Category[]): <T>(source: Observable<Entry[]>) => Observable<{ category: Category, spent: number }[]> {
-//   return <T>(source: Observable<Entry[]>): Observable<{ category: Category, spent: number }[]> => source.pipe(
-//     map(o => {
-//       return categories.map(category => {
-//         return {
-//           category, spent: o.filter(e => e.category.id === category.id).reduce((curr, prev) => {
-//             curr.amount += prev.amount;
-//             return curr;
-//           }, {amount: 0}).amount
-//         };
-//       });
-//     })
-//   );
-// }
 
 export function entriesBySubCategory(subCategoryId: number): <T>(source: Observable<Entry[]>) => Observable<Entry[]> {
   return <T>(source: Observable<Entry[]>): Observable<Entry[]> => source.pipe(

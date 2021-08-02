@@ -1,13 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {SubCategory} from '../../sub-categories/state/sub-category.model';
-import {SavingsTotal} from '../../interfaces/savings-total';
+import {SubCategoryTotal} from '../../interfaces/sub-category-total';
 
 @Pipe({
   name: 'sumSavingsTotals'
 })
 export class SumSavingsTotalsPipe implements PipeTransform {
 
-  transform(savingsTotals: SavingsTotal[], ...args: unknown[]): number {
+  transform(savingsTotals: SubCategoryTotal[], ...args: unknown[]): number {
     return savingsTotals.reduce((prev, curr) => prev + curr.total, 0);
   }
 

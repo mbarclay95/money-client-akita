@@ -2,11 +2,11 @@ import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {SubCategory} from '../../sub-categories/state/sub-category.model';
 import {SubCategoriesQuery} from '../../sub-categories/state/sub-categories.query';
-import {createSavingsTotal, SavingsTotal} from '../../interfaces/savings-total';
-import {map, startWith, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {createSavingsDetails, SavingsDetails} from '../../interfaces/savings-details';
+import {createSelectedDetails, SelectedDetails} from '../../interfaces/selected-details';
+import {createSubCategoryTotal, SubCategoryTotal} from '../../interfaces/sub-category-total';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class SavingsStoreService {
 
   refreshTotals$: Subject<void> = new BehaviorSubject<void>(null);
 
-  getTotalsForSubCategories$: Observable<SavingsTotal[]> = combineLatest([
+  getTotalsForSubCategories$: Observable<SubCategoryTotal[]> = combineLatest([
     this.refreshTotals$.asObservable(),
     this.subCategoriesQuery.select('showInactive')
   ]).pipe(
@@ -25,7 +25,7 @@ export class SavingsStoreService {
     map(o => o.sort((a, b) => a.subCategory.sort - b.subCategory.sort))
   );
 
-  getSavingsDetailsForActive$: Observable<SavingsDetails> = combineLatest([
+  getSavingsDetailsForActive$: Observable<SelectedDetails> = combineLatest([
     this.refreshTotals$.asObservable(),
     this.activeSubCategory$
   ]).pipe(
@@ -53,18 +53,18 @@ export class SavingsStoreService {
     this.activeSubCategorySubject.next(subCategory);
   }
 
-  getSavingsDetailsObservable(subCategory: SubCategory): Observable<SavingsDetails> {
-    let queryString = `forSavings=true&showEntries=true&`;
+  getSavingsDetailsObservable(subCategory: SubCategory): Observable<SelectedDetails> {
+    let queryString = `forSavings=1&showEntries=1&`;
     queryString += (subCategory ? `subCategoryId=${subCategory.id}` : '');
 
-    return this.http.get<SavingsDetails>(`${environment.apiUrl}/entry-sums?${queryString}`).pipe(
-      map(o => createSavingsDetails(o))
+    return this.http.get<SelectedDetails>(`${environment.apiUrl}/entry-sums?${queryString}`).pipe(
+      map(o => createSelectedDetails(o))
     );
   }
 
-  getSavingsCategories(showInactive: boolean): Observable<SavingsTotal[]> {
-    return this.http.get<SavingsTotal[]>(`${environment.apiUrl}/saving-totals?showInactive=${showInactive}`).pipe(
-      map(o => o.map(s => createSavingsTotal(s)))
+  getSavingsCategories(showInactive: boolean): Observable<SubCategoryTotal[]> {
+    return this.http.get<SubCategoryTotal[]>(`${environment.apiUrl}/saving-totals?showInactive=${showInactive}`).pipe(
+      map(o => o.map(s => createSubCategoryTotal(s)))
     );
   }
 

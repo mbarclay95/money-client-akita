@@ -1,0 +1,39 @@
+
+<div>
+
+  <ng-container *ngIf="ui.allExpenses">
+
+    <div class="my-1 text-center" style="font-size: 1.1rem;">Expenses</div>
+
+    <div class="d-flex justify-content-between border border-radius m-2 p-3" style="font-size: .9rem"
+         *ngFor="let category of categoriesQuery.expenseCategories$ | async"
+         [ngClass]="{'selected': ui.categoryId === category.id}"
+         (click)="spendingUiService.updateCategory({categoryId: category.id})">
+
+      <div>{{category.name}}</div>
+
+      <div>{{category | reduceCategoryTotal | async | currency}}</div>
+
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="!ui.allExpenses && (!!ui.categoryId || !!ui.subCategoryId )">
+
+    <div class="my-1 text-center" style="font-size: 1.1rem;">{{(spendingUiService.categoryOrParent$ | async).name}}</div>
+
+    <div class="d-flex justify-content-between border border-radius m-2 p-3" style="font-size: .9rem"
+         *ngFor="let subCategoryTotal of ui | subCategoryTotals | async"
+         [ngClass]="{'selected': ui.subCategoryId === subCategoryTotal.subCategory.id}"
+         (click)="spendingUiService.updateCategory({subCategoryId: subCategoryTotal.subCategory.id})">
+
+      <div>{{subCategoryTotal.subCategory.name}}</div>
+
+      <div>{{subCategoryTotal.total | currency}}</div>
+
+    </div>
+
+  </ng-container>
+
+
+</div>

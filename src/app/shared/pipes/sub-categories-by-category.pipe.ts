@@ -14,8 +14,10 @@ export class SubCategoriesByCategoryPipe implements PipeTransform {
   ) {
   }
 
-  transform(category: Category, onlyActive: boolean = false, ...args: unknown[]): Observable<SubCategory[]> {
-    return this.subCategoriesQuery.subCategoriesByCategory$(category.id, onlyActive);
+  transform(category: Category | number, onlyActive: boolean = false, ...args: unknown[]): Observable<SubCategory[]> {
+    const categoryId = typeof category === 'number' ? category : category.id;
+
+    return this.subCategoriesQuery.subCategoriesByCategory$(categoryId, onlyActive);
   }
 
 }

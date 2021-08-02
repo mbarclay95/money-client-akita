@@ -1,0 +1,42 @@
+<div>
+
+  <nz-table nzSize="small" style="background: white" [nzData]="[true]" [nzShowPagination]="false" nzBordered
+            [nzScroll]="{ y: '33vh'}">
+    <thead>
+    <tr>
+      <th colspan="4" class="table-title" (click)="showTransactions = !showTransactions">
+        <i *ngIf="!showTransactions" nz-icon nzType="caret-right" nzTheme="fill"></i>
+        <i *ngIf="showTransactions"  nz-icon nzType="caret-down" nzTheme="fill"></i>
+        Transactions
+      </th>
+    </tr>
+    <tr *ngIf="showTransactions">
+      <th nzWidth="15px">Actions</th>
+      <th>Description</th>
+      <th nzWidth="20%">Date</th>
+      <th nzWidth="20%">Amount</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="showTransactions">
+    <tr *ngFor="let entry of spendingService.entries$ | async">
+      <td>
+        <button nz-button (click)="editEntry.next(entry)" class="mr-1" nzType="default" nzSize="small">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+
+        <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure delete this transaction?" nzSize="small"
+                (nzOnConfirm)="entriesService.delete(entry)" nzType="default">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+      </td>
+      <td>{{entry.description}}</td>
+      <td>{{entry.dateSpent | date: 'shortDate'}}</td>
+      <td>{{entry.amount | currency}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>
+
+<app-edit-entry-modal [openModal]="editEntry.asObservable()"></app-edit-entry-modal>
+

@@ -16,6 +16,7 @@ import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {SharedModule} from './shared/shared.module';
 import {NZ_ICONS} from 'ng-zorro-antd/icon';
 import * as AllIcons from '@ant-design/icons-angular/icons';
+import {NgxEchartsModule} from 'ngx-echarts';
 
 registerLocaleData(en);
 
@@ -39,7 +40,10 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     HttpClientModule,
     BrowserAnimationsModule,
     NzLayoutModule,
-    SharedModule
+    SharedModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
