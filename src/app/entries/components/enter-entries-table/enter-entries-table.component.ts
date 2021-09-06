@@ -23,8 +23,6 @@ export class EnterEntriesTableComponent implements OnInit {
   openEntry: number;
   openMappingModal: Subject<Mapping> = new Subject<Mapping>();
 
-  private subscriptionDestroyer: Subject<void> = new Subject<void>();
-
   constructor(
     public categoriesService: CategoriesService,
     public subCategoriesQuery: SubCategoriesQuery,
@@ -34,19 +32,14 @@ export class EnterEntriesTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.subscribeToFocus();
   }
 
-  // subscribeToFocus(): void {
-  //   this.enterEntriesStoreService.focusNewEntry.asObservable().pipe(
-  //     filter(entryId => !isNaN(entryId)),
-  //     takeUntil(this.subscriptionDestroyer)
-  //   ).subscribe(entryId => console.log(this.entryTable));
-  // }
-
-  removeEntry(entryId: number): void {
-    this.removedEntry.emit(entryId);
-    this.enterEntriesStoreService.removeEntry(entryId);
+  removeEntry(entry: Entry): void {
+    this.removedEntry.emit(entry.id);
+    this.enterEntriesStoreService.removeEntry(entry.id);
+    if (entry.isIncomplete) {
+      this.enterEntriesStoreService.removeFromServer(entry.id);
+    }
   }
 
   isEntryCompleted(entry: Entry): boolean {

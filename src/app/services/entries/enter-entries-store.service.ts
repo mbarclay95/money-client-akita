@@ -50,6 +50,10 @@ export class EnterEntriesStoreService {
     this.entries = this.entries.filter(e => e.id !== entryId);
   }
 
+  async removeFromServer(entryId: number): Promise<void> {
+    await this.http.delete(`${environment.apiUrl}/entries/${entryId}`).toPromise();
+  }
+
   isEntryComplete(entry: Entry): boolean {
     return isEntryCompleted(entry);
   }
