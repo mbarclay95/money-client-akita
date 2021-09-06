@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DateFilterStoreService} from '../../../services/budgets/date-filter-store.service';
+import {BudgetUiState} from '../../../budgets/state/budgets.store';
 
 @Component({
   selector: 'app-date-filter',
@@ -7,6 +8,7 @@ import {DateFilterStoreService} from '../../../services/budgets/date-filter-stor
   styleUrls: ['./date-filter.component.scss']
 })
 export class DateFilterComponent implements OnInit {
+  @Input() ui: BudgetUiState;
   date: any;
 
   constructor(

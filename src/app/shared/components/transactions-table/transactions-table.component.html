@@ -18,7 +18,7 @@
     </tr>
     </thead>
     <tbody *ngIf="showTransactions">
-    <tr *ngFor="let entry of spendingService.entries$ | async">
+    <tr *ngFor="let entry of entries">
       <td>
         <button nz-button (click)="editEntry.next(entry)" class="mr-1" nzType="default" nzSize="small">
           <i nz-icon nzType="edit" nzTheme="outline"></i>

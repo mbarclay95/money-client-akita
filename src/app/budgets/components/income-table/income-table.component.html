@@ -71,9 +71,8 @@
                          currencyMask [options]="{align: 'left'}" class="budget-input">
                 </td>
                 <td class="content">
-                  <i *ngIf="subCategoryTotals.budget.amount !== subCategoryTotals.entry" nz-icon class="mr-2 pointer"
-                     nzType="left-square"
-                     nzTheme="outline"
+                  <i *ngIf="subCategoryTotals.budget.amount !== subCategoryTotals.entry && !ui.masterBudgetView"
+                     nz-icon class="mr-2 pointer" nzType="left-square" nzTheme="outline"
                      (click)="entryBudgetWrapperService.updateBudget(subCategoryTotals.budget, subCategoryTotals.entry)"></i>
                   {{subCategoryTotals.entry | currency}}
                 </td>

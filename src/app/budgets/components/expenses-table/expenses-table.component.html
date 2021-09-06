@@ -76,9 +76,9 @@
                        currencyMask [options]="{align: 'left'}" class="budget-input">
               </td>
               <td class="content">
-                <i *ngIf="subCategoryTotals.budget.amount !== subCategoryTotals.entry" nz-icon class="mr-2 pointer"
+                <i *ngIf="subCategoryTotals.budget.amount !== subCategoryTotals.entry && !ui.masterBudgetView"
                    (click)="entryBudgetWrapperService.updateBudget(subCategoryTotals.budget, subCategoryTotals.entry)"
-                   nzType="left-square" nzTheme="outline"></i>
+                   nzType="left-square" nzTheme="outline" nz-icon class="mr-2 pointer"></i>
                 {{subCategoryTotals.entry | currency}}
               </td>
               <td (click)="openMoveMoneyModal.emit(subCategoryTotals.budget)"

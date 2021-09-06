@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {EntryBudgetWrapperStore} from './entry-budget-wrapper.store';
-import {map, takeUntil, tap} from 'rxjs/operators';
+import {map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {DateFilterStoreService} from '../../services/budgets/date-filter-store.service';
 import {createEntryBudgetWrapper, EntryBudgetWrapper} from './entry-budget-wrapper';
 import {environment} from '../../../environments/environment';
 import {arrayAdd, arrayUpdate, setLoading} from '@datorama/akita';
 import {Budget, createBudget} from '../../budgets/state/budget.model';
-import {Subject} from 'rxjs';
+import {combineLatest, Subject} from 'rxjs';
+import {BudgetsQuery} from '../../budgets/state/budgets.query';
 
 @Injectable({providedIn: 'root'})
 export class EntryBudgetWrapperService {
@@ -16,22 +17,35 @@ export class EntryBudgetWrapperService {
   constructor(
     private entryBudgetWrapperStore: EntryBudgetWrapperStore,
     private http: HttpClient,
-    private dateFilterStoreService: DateFilterStoreService
+    private dateFilterStoreService: DateFilterStoreService,
+    private budgetsQuery: BudgetsQuery
   ) {
   }
 
-  subscribeToDateFilter(): void {
-    this.dateFilterStoreService.date.pipe(
+  subscribeUi(): void {
+    combineLatest([
+      this.dateFilterStoreService.date,
+      this.budgetsQuery.ui$
+    ]).pipe(
+      map(([date, ui]) => {
+        let queryString = `month=${date.month + 1}&year=${date.year}&`;
+        if (ui.masterBudgetView) {
+          queryString += `masterBudget=1`;
+        }
+
+        return queryString;
+      }),
+      switchMap(queryString => this.getByMonthYear(queryString)),
       takeUntil(this.subscriptionDestroyer)
-    ).subscribe(date => this.getByMonthYear(date.month, date.year));
+    ).subscribe();
   }
 
   stopDateSubscription(): void {
     this.subscriptionDestroyer.next();
   }
 
-  async getByMonthYear(month: number, year: number): Promise<void> {
-    await this.http.get<EntryBudgetWrapper>(`${environment.apiUrl}/entry-budgets?month=${month + 1}&year=${year}`).pipe(
+  async getByMonthYear(queryString: string): Promise<void> {
+    await this.http.get<EntryBudgetWrapper>(`${environment.apiUrl}/entry-budgets?${queryString}`).pipe(
       setLoading(this.entryBudgetWrapperStore),
       map(e => createEntryBudgetWrapper(e)),
       tap(e => this.entryBudgetWrapperStore.update(e))
@@ -43,8 +57,9 @@ export class EntryBudgetWrapperService {
     const newBudget = {...budget, ...{amount}};
 
     if (budget.id === 0) {
-      newBudget.month = this.dateFilterStoreService.getDate().month + 1;
-      newBudget.year = this.dateFilterStoreService.getDate().year;
+      const masterBudgetView = this.budgetsQuery.getUi().masterBudgetView;
+      newBudget.month = masterBudgetView ? null : this.dateFilterStoreService.getDate().month + 1;
+      newBudget.year = masterBudgetView ? null : this.dateFilterStoreService.getDate().year;
       await this.http.post<Budget>(`${environment.apiUrl}/budget`, newBudget).pipe(
         tap(b => this.entryBudgetWrapperStore.update(({budgets}) => ({
           budgets: arrayAdd(budgets, createBudget(b))

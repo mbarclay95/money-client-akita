@@ -6,6 +6,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Budget} from '../../state/budget.model';
 import {EntryBudgetWrapperService} from '../../../entry-budget-wrapper/state/entry-budget-wrapper.service';
+import {BudgetsQuery} from '../../state/budgets.query';
 
 @Component({
   selector: 'app-budget-page',
@@ -20,11 +21,13 @@ export class BudgetPageComponent implements OnInit, OnDestroy {
 
   constructor(
     public inDepthStoreService: InDepthStoreService,
-    private entryBudgetWrapperService: EntryBudgetWrapperService
-  ) { }
+    private entryBudgetWrapperService: EntryBudgetWrapperService,
+    public budgetsQuery: BudgetsQuery,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.entryBudgetWrapperService.subscribeToDateFilter();
+    this.entryBudgetWrapperService.subscribeUi();
     this.subscribeToActiveCategory();
   }
 

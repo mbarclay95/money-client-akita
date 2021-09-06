@@ -10,6 +10,7 @@ import {EntryBudgetWrapperQuery} from '../../../entry-budget-wrapper/state/entry
 import {EntryBudgetWrapperService} from '../../../entry-budget-wrapper/state/entry-budget-wrapper.service';
 import {Budget} from '../../state/budget.model';
 import {take, tap} from 'rxjs/operators';
+import {BudgetUiState} from '../../state/budgets.store';
 
 @Component({
   selector: 'app-savings-table',
@@ -18,6 +19,7 @@ import {take, tap} from 'rxjs/operators';
 })
 export class SavingsTableComponent implements OnInit {
   @Input() activeCategory: Category | SubCategory;
+  @Input() ui: BudgetUiState;
   @Output() openMoveMoneyModal: EventEmitter<Budget> = new EventEmitter<Budget>();
   showSavings = true;
   openGoalModal: Subject<void> = new Subject<void>();

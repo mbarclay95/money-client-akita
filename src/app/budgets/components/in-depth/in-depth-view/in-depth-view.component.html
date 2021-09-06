@@ -18,7 +18,7 @@
 
         <app-income-month *ngIf="isIncomeCategory(activeCategory)" [activeTotals]="activeTotals"></app-income-month>
 
-        <app-transactions-table [changedCategory]="activeCategory"></app-transactions-table>
+        <app-transactions-table [entries]="activeCategory | entriesByActiveCategory"></app-transactions-table>
 
       </ng-container>
 

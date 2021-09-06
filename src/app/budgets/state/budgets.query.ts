@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {QueryEntity} from '@datorama/akita';
-import {BudgetsState, BudgetsStore} from './budgets.store';
+import {BudgetsState, BudgetsStore, BudgetUiState} from './budgets.store';
 import {Observable} from 'rxjs';
 import {Budget, createBudget} from './budget.model';
 import {map} from 'rxjs/operators';
@@ -10,6 +10,8 @@ import {SubCategory} from '../../sub-categories/state/sub-category.model';
 export class BudgetsQuery extends QueryEntity<BudgetsState> {
   isLoading$ = this.selectLoading();
   budgets$ = this.selectAll();
+
+  ui$: Observable<BudgetUiState> = this.select('ui');
 
   incomeBudgets$ = this.selectAll({
     filterBy: ({category}) => category.income
@@ -25,6 +27,10 @@ export class BudgetsQuery extends QueryEntity<BudgetsState> {
 
   constructor(protected store: BudgetsStore) {
     super(store);
+  }
+
+  getUi(): BudgetUiState {
+    return this.getValue().ui;
   }
 
 }

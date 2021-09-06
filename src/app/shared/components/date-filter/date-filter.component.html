@@ -1,8 +1,9 @@
 
 <div class="d-flex align-items-center">
 
-  <i nz-icon nzType="caret-left" nzTheme="fill" class="arrow-buttons mr-2"
-     (click)="dateFilterStoreService.decrementMonth()"></i>
+  <button nz-button nzType="text" (click)="dateFilterStoreService.decrementMonth()">
+    <i nz-icon nzType="caret-left" nzTheme="fill" class="mr-2 arrow-buttons"></i>
+  </button>
 
   <nz-select nzPlaceHolder="Select month" style="width: 100px" [ngModel]="(dateFilterStoreService.date | async)?.month"
              (ngModelChange)="dateFilterStoreService.changeMonth($event)">
@@ -11,15 +12,17 @@
 
   </nz-select>
 
-  <i nz-icon nzType="caret-right" nzTheme="fill" class="ml-2 arrow-buttons"
-     (click)="dateFilterStoreService.incrementMonth()"></i>
+  <button nz-button nzType="text" (click)="dateFilterStoreService.incrementMonth()">
+    <i nz-icon nzType="caret-right" nzTheme="fill" class="ml-2 arrow-buttons"></i>
+  </button>
+
 
   <ng-container *ngIf="dateFilterStoreService.years">
 
-    <nz-select nzPlaceHolder="Select year" [ngModel]="(dateFilterStoreService.date | async)?.year"
-               class="ml-1" (ngModelChange)="dateFilterStoreService.changeYear($event)" style="width: 100px">
+    <nz-select nzPlaceHolder="Select year" [ngModel]="(dateFilterStoreService.date | async)?.year" style="width: 100px"
+               class="ml-1" (ngModelChange)="dateFilterStoreService.changeYear($event)">
 
-      <nz-option *ngFor="let year of dateFilterStoreService?.years" [nzValue]="year" [nzLabel]="year"></nz-option>
+      <nz-option *ngFor="let year of dateFilterStoreService?.years" [nzValue]="year" [nzLabel]="year.toString()"></nz-option>
 
     </nz-select>
 

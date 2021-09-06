@@ -21,7 +21,7 @@
 
   <div class="d-flex flex-column w-100 p-2 mt-2 view-containers">
 
-    <app-transactions-table></app-transactions-table>
+    <app-transactions-table [entries]="spendingService.entries$ | async"></app-transactions-table>
 
   </div>
 

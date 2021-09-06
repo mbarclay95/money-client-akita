@@ -1,10 +1,10 @@
-<div class="d-flex flex-column" style="height: 100%;">
+<div class="d-flex flex-column" style="height: 100%;" *ngIf="budgetsQuery.ui$ | async as ui">
 
   <div class="d-flex justify-content-start align-items-center border-bottom" style="height: 5%; margin-top: -5px">
 
-    <app-date-filter class="w-25 h-100"></app-date-filter>
+    <app-date-filter [ui]="ui" class="w-25 h-100"></app-date-filter>
 
-    <app-over-view class="w-75 h-100"></app-over-view>
+    <app-over-view [ui]="ui" class="w-75 h-100"></app-over-view>
 
   </div>
 
@@ -12,12 +12,12 @@
 
     <div class="d-flex flex-column h-100 border-right" style="width: 60%; overflow-y: auto">
 
-      <app-income-table [activeCategory]="activeCategory"></app-income-table>
+      <app-income-table [activeCategory]="activeCategory" [ui]="ui"></app-income-table>
 
-      <app-expenses-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)"
+      <app-expenses-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)" [ui]="ui"
                           [activeCategory]="activeCategory"></app-expenses-table>
 
-      <app-savings-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)"
+      <app-savings-table (openMoveMoneyModal)="openMoveMoneyModal.next($event)" [ui]="ui"
                          [activeCategory]="activeCategory"></app-savings-table>
 
     </div>

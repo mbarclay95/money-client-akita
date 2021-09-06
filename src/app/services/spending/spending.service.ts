@@ -9,6 +9,8 @@ import {createSubCategoryTotal, SubCategoryTotal} from '../../interfaces/sub-cat
 import {DateFilterStoreService} from '../budgets/date-filter-store.service';
 import {Entry} from '../../entries/state/entry.model';
 import {createSelectedDetails, SelectedDetails} from '../../interfaces/selected-details';
+import {Category} from '../../categories/state/category.model';
+import {SubCategory} from '../../sub-categories/state/sub-category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -132,6 +134,14 @@ export class SpendingService {
     return this.http.get<SelectedDetails>(`${environment.apiUrl}/entry-sums?showEntries=1&${queryString}`).pipe(
       map(details => createSelectedDetails(details)),
     );
+  }
+
+  getEntriesByCategory(category: Category): Entry[] {
+    return this.summedEntriesSubject.value.entries.filter(entry => entry.category.id === category.id);
+  }
+
+  getEntriesBySubCategory(subCategory: SubCategory): Entry[] {
+    return this.summedEntriesSubject.value.entries.filter(entry => entry.subCategory.id === subCategory.id);
   }
 }
 

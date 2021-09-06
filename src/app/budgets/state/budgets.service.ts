@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {ID} from '@datorama/akita';
 import {HttpClient} from '@angular/common/http';
-import {BudgetsStore} from './budgets.store';
+import {BudgetsStore, BudgetUiState} from './budgets.store';
 import {Budget, createBudget} from './budget.model';
 import {map, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {DateFilterStoreService} from '../../services/budgets/date-filter-store.service';
-import {createEntry} from '../../entries/state/entry.model';
+import {BudgetsQuery} from './budgets.query';
 
 @Injectable({providedIn: 'root'})
 export class BudgetsService {
 
   constructor(
     private budgetsStore: BudgetsStore,
+    private budgetsQuery: BudgetsQuery,
     private http: HttpClient,
     private dateFilterStoreService: DateFilterStoreService
   ) {
@@ -58,5 +58,9 @@ export class BudgetsService {
         tap(b => this.budgetsStore.update(b.id, createBudget(b)))
       ).toPromise();
     }
+  }
+
+  updateUi(newState: Partial<BudgetUiState>): void {
+    this.budgetsStore.update({ui: {...this.budgetsQuery.getUi(), ...newState}});
   }
 }

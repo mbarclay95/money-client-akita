@@ -7,6 +7,7 @@ import {SubCategory} from '../../../sub-categories/state/sub-category.model';
 import {EntryBudgetWrapperQuery} from '../../../entry-budget-wrapper/state/entry-budget-wrapper.query';
 import {EntryBudgetWrapperService} from '../../../entry-budget-wrapper/state/entry-budget-wrapper.service';
 import {take, tap} from 'rxjs/operators';
+import {BudgetUiState} from '../../state/budgets.store';
 
 @Component({
   selector: 'app-income-table',
@@ -15,6 +16,7 @@ import {take, tap} from 'rxjs/operators';
 })
 export class IncomeTableComponent implements OnInit {
   @Input() activeCategory: Category | SubCategory;
+  @Input() ui: BudgetUiState;
   showIncome = true;
 
   constructor(

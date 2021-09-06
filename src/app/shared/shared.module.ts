@@ -31,6 +31,7 @@ import { PrintPrettyMonthYearPipe } from './pipes/print-pretty-month-year.pipe';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { StatsForYearComponent } from './components/stats-for-year/stats-for-year.component';
 import { SumOfSummedEntriesPipe } from './pipes/sum-of-summed-entries.pipe';
+import { EntriesByActiveCategoryPipe } from './pipes/entries-by-active-category.pipe';
 
 
 
@@ -55,6 +56,7 @@ import { SumOfSummedEntriesPipe } from './pipes/sum-of-summed-entries.pipe';
       TransactionsTableComponent,
       StatsForYearComponent,
       SumOfSummedEntriesPipe,
+      EntriesByActiveCategoryPipe,
     ],
   exports: [
     HeaderComponent,
@@ -73,6 +75,7 @@ import { SumOfSummedEntriesPipe } from './pipes/sum-of-summed-entries.pipe';
     PrintPrettyMonthYearPipe,
     TransactionsTableComponent,
     StatsForYearComponent,
+    EntriesByActiveCategoryPipe,
   ],
   imports: [
     CommonModule,
