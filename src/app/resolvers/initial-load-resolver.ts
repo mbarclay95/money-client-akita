@@ -20,7 +20,6 @@ export class InitialLoadResolver implements Resolve<void>{
     private goalsService: GoalsService,
     private entryBudgetWrapperService: EntryBudgetWrapperService,
     private uploadTemplatesService: UploadTemplatesService,
-    private authService: AuthService,
     private mappingsService: MappingsService,
     private banksService: BanksService,
     private entriesService: EntriesService,
@@ -29,7 +28,6 @@ export class InitialLoadResolver implements Resolve<void>{
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<void> {
-    await this.authService.getUser(1);
     await this.categoriesService.get();
     await this.subCategoriesService.get();
     await this.goalsService.get();
