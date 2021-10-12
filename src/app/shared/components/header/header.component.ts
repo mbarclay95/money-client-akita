@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthQuery} from '../../../auth/state/auth.query';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authQuery: AuthQuery
+  ) { }
 
   ngOnInit(): void {
   }

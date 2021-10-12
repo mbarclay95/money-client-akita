@@ -16,12 +16,13 @@ import {ReportsPageComponent} from './reports/pages/reports-page/reports-page.co
 import {ReportsModule} from './reports/reports.module';
 import {SpendingPageComponent} from './spending/pages/spending-page/spending-page.component';
 import {SpendingModule} from './spending/spending.module';
+import {AuthGuard} from './services/auth/auth.guard';
 
 const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'login', component: LoginPageComponent},
   {
-    path: '', resolve: {InitialLoadResolver}, children: [
-      {path: '', redirectTo: 'add-transactions', pathMatch: 'full'},
-      {path: 'login', component: LoginPageComponent},
+    path: 'app', resolve: {InitialLoadResolver}, canActivate: [AuthGuard], children: [
       {path: 'add-transactions', component: EnterEntriesPageComponent},
       {path: 'spending', component: SpendingPageComponent},
       {path: 'budget', component: BudgetPageComponent},
@@ -30,7 +31,6 @@ const routes: Routes = [
       {path: 'reports', component: ReportsPageComponent},
     ]
   },
-
 ];
 
 @NgModule({

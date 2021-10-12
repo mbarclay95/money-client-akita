@@ -1,9 +1,17 @@
-<div class="logo"></div>
-<ul nz-menu nzTheme="dark" nzMode="horizontal">
-  <li nz-menu-item nzMatchRouterExact routerLink="add-transactions">Transactions</li>
-  <li nz-menu-item nzMatchRouterExact routerLink="spending">Spending</li>
-  <li nz-menu-item nzMatchRouterExact routerLink="budget">Budget</li>
-  <li nz-menu-item nzMatchRouterExact routerLink="savings">Savings</li>
-<!--  <li nz-menu-item nzMatchRouterExact routerLink="reports">Reports</li>-->
-  <li nz-menu-item nzMatchRouterExact routerLink="manage">Manage</li>
-</ul>
+<div class="d-flex justify-content-between w-100">
+  <ul nz-menu nzTheme="dark" nzMode="horizontal">
+    <ng-container *ngIf="authQuery.isLoggedIn$ | async">
+      <li nz-menu-item nzMatchRouterExact routerLink="app/add-transactions">Transactions</li>
+      <li nz-menu-item nzMatchRouterExact routerLink="app/spending">Spending</li>
+      <li nz-menu-item nzMatchRouterExact routerLink="app/budget">Budget</li>
+      <li nz-menu-item nzMatchRouterExact routerLink="app/savings">Savings</li>
+      <!--  <li nz-menu-item nzMatchRouterExact routerLink="reports">Reports</li>-->
+      <li nz-menu-item nzMatchRouterExact routerLink="app/manage">Manage</li>
+    </ng-container>
+  </ul>
+
+  <div style="color: rgba(255, 255, 255, 0.65)">{{authQuery.selectName$ | async}}</div>
+
+</div>
+
+

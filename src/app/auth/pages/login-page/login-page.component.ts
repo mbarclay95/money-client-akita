@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../state/auth.service';
 import {AuthQuery} from '../../state/auth.query';
+import {LoginService} from '../../../services/auth/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,15 +12,14 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    public authQuery: AuthQuery
+    public authQuery: AuthQuery,
+    public loginService: LoginService
   ) { }
 
-  ngOnInit(): void {
-    this.getUser();
-  }
-
-  async getUser(): Promise<void> {
-    await this.authService.getUser(1);
+  async ngOnInit(): Promise<void> {
+    if (!await this.loginService.isLoggedIn()) {
+      this.loginService.initializeForm();
+    }
   }
 
 }
