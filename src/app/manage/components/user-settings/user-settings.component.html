@@ -3,9 +3,13 @@
 
   <h3 class="mb-4">User Settings</h3>
 
+  <div class="border-bottom w-100 my-3"></div>
+
   <ng-container *ngIf="authQuery.select() | async as user">
 
     <div class="d-flex flex-column w-25">
+
+      <h5>Initial Savings</h5>
 
       <div class="my-2">
 
@@ -39,6 +43,48 @@
     </div>
 
   </ng-container>
+
+  <div class="border-bottom w-100 my-3"></div>
+
+  <div class="w-25">
+
+    <h5>Password Reset</h5>
+
+    <div class="my-2">
+
+      Password
+
+      <input nz-input [disabled]="savingPassword" [(ngModel)]="newPassword">
+
+    </div>
+
+    <div class="my-2">
+
+      Confirm Password
+
+      <input nz-input [disabled]="savingPassword" [(ngModel)]="confirmNewPassword">
+
+    </div>
+
+    <button class="mt-2" nz-button nzType="primary" (click)="updatePassword()" [nzLoading]="savingPassword"
+            [disabled]="newPassword === '' || confirmNewPassword === '' || confirmNewPassword !== newPassword">Save Password</button>
+
+    <div *ngIf="success" class="mt-2 text-success">Password changed</div>
+
+    <div *ngIf="error" class="mt-2 text-danger">There was and error</div>
+
+
+  </div>
+
+  <div class="border-bottom w-100 my-3"></div>
+
+  <div>
+
+    <h5>Logout of account</h5>
+
+    <button class="mt-2" nz-button nzType="primary" (click)="loginService.logout()">Logout</button>
+
+  </div>
 
 </div>
 

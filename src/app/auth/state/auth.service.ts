@@ -24,6 +24,17 @@ export class AuthService {
     ).toPromise();
   }
 
+  async logout(): Promise<void> {
+    await this.http.get<{success: boolean}>(`${environment.apiUrl}/logout`).pipe(
+      filter(response => response.success),
+      tap(() => this.authStorageService.clearToken())
+    ).toPromise();
+  }
+
+  async updatePassword(newPassword: string): Promise<void> {
+    await this.http.post(`${environment.apiUrl}/change-password`, {newPassword}).toPromise();
+  }
+
   async getUser(id: number): Promise<void> {
     await this.http.get<AuthState>(`${environment.apiUrl}/user/${id}`).pipe(
       tap(user => this.authStore.update(createAuth(user)))

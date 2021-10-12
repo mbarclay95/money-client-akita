@@ -61,4 +61,9 @@ export class LoginService {
 
     await this.router.navigateByUrl('app/add-transactions');
   }
+
+  async logout(): Promise<void> {
+    await this.authService.logout();
+    await this.router.navigateByUrl('login');
+  }
 }
