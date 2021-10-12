@@ -36,7 +36,7 @@
 
     <div class="d-flex justify-content-end">
 
-      <button nz-button nzType="primary" [nzLoading]="loginService.loading"
+      <button nz-button nzType="primary" [nzLoading]="loginService.loading" (keydown.enter)="loginService.login()"
               [disabled]="loginService.loading" (click)="loginService.login()">Login</button>
 
     </div>

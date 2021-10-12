@@ -15,7 +15,7 @@ import {take, tap} from 'rxjs/operators';
   styleUrls: ['./category-settings.component.scss']
 })
 export class CategorySettingsComponent implements OnInit {
-  @Input() activeCategory: Category;
+  @Input() activeCategory: Category | null;
 
   @ViewChild('categoriesTableTag', {static: true}) categoriesTable: NzTableComponent<Category>;
   @ViewChild('subCategoriesTableTag', {static: true}) subCategoriesTable: NzTableComponent<SubCategory>;

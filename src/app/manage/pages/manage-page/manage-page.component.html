@@ -1,24 +1,20 @@
+<nz-tabset nzType="card" nzSelectedIndex="0" nzSize="small">
+  <nz-tab nzTitle="Transaction History">
+    <app-entry-settings></app-entry-settings>
+  </nz-tab>
+  <nz-tab nzTitle="Categories">
+    <app-category-settings [activeCategory]="categoriesQuery.selectActive() | async"></app-category-settings>
+  </nz-tab>
+  <nz-tab nzTitle="Mappings">
+    <app-mappings-settings></app-mappings-settings>
+  </nz-tab>
+  <nz-tab nzTitle="Banks">
+    <app-banks-settings></app-banks-settings>
+  </nz-tab>
+  <nz-tab nzTitle="User Settings">
+    <app-user-settings></app-user-settings>
+  </nz-tab>
+</nz-tabset>
 
-<ng-container *ngIf="categoriesQuery.selectActive() | async as activeCategory">
-
-  <nz-tabset nzType="card" nzSelectedIndex="0" nzSize="small">
-    <nz-tab nzTitle="Transaction History">
-      <app-entry-settings></app-entry-settings>
-    </nz-tab>
-    <nz-tab nzTitle="Categories">
-      <app-category-settings [activeCategory]="activeCategory"></app-category-settings>
-    </nz-tab>
-    <nz-tab nzTitle="Mappings">
-      <app-mappings-settings></app-mappings-settings>
-    </nz-tab>
-    <nz-tab nzTitle="Banks">
-      <app-banks-settings></app-banks-settings>
-    </nz-tab>
-    <nz-tab nzTitle="User Settings">
-      <app-user-settings></app-user-settings>
-    </nz-tab>
-  </nz-tabset>
-
-</ng-container>
 
 

@@ -27,7 +27,10 @@ export class AuthService {
   async logout(): Promise<void> {
     await this.http.get<{success: boolean}>(`${environment.apiUrl}/logout`).pipe(
       filter(response => response.success),
-      tap(() => this.authStorageService.clearToken())
+      tap(() => {
+        this.authStore.update(createAuth({}));
+        this.authStorageService.clearToken();
+      })
     ).toPromise();
   }
 
