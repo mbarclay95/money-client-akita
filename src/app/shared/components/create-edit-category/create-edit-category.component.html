@@ -11,6 +11,20 @@
 
     </div>
 
+    <div class="w-100 flex-column mt-2">
+      Type
+
+      <nz-select class="w-100" [ngModel]="category | getCategoryType" (ngModelChange)="changeCategoryType($event)">
+        <nz-option nzValue="Income" nzLabel="Income"></nz-option>
+        <nz-option nzValue="Savings" nzLabel="Savings"></nz-option>
+        <nz-option nzValue="Expense" nzLabel="Expense"></nz-option>
+      </nz-select>
+
+    </div>
+
+    <div class="mt-2 text-warning" *ngIf="category.income">*Only 1 income category allowed</div>
+    <div class="mt-2 text-warning" *ngIf="category.savings">*Only 1 savings category allowed</div>
+
   </div>
 
 </nz-modal>

@@ -44,9 +44,7 @@
                    [ngModel]="category.isActive"></label>
           </td>
           <td class="font-italic">
-            <ng-container *ngIf="category.savings">Savings</ng-container>
-            <ng-container *ngIf="category.income">Income</ng-container>
-            <ng-container *ngIf="!category.savings && !category.income">Expense</ng-container>
+            {{category | getCategoryType }}
           </td>
           <td>
             <ng-container>{{category.name}}</ng-container>

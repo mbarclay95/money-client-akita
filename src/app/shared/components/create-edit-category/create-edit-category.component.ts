@@ -46,4 +46,20 @@ export class CreateEditCategoryComponent implements OnInit, OnDestroy {
 
     this.isVisible = false;
   }
+
+  changeCategoryType(newType: string): void {
+    if (this.category.income) {
+      this.category.income = false;
+    } else if (this.category.savings) {
+      this.category.savings = false;
+    }
+
+    switch (newType) {
+      case 'Savings':
+        this.category.savings = true;
+        break;
+      case 'Income':
+        this.category.income = true;
+    }
+  }
 }

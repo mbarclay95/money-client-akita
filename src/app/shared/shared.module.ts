@@ -32,6 +32,7 @@ import { TransactionsTableComponent } from './components/transactions-table/tran
 import { StatsForYearComponent } from './components/stats-for-year/stats-for-year.component';
 import { SumOfSummedEntriesPipe } from './pipes/sum-of-summed-entries.pipe';
 import { EntriesByActiveCategoryPipe } from './pipes/entries-by-active-category.pipe';
+import { GetCategoryTypePipe } from './pipes/get-category-type.pipe';
 
 
 
@@ -57,6 +58,7 @@ import { EntriesByActiveCategoryPipe } from './pipes/entries-by-active-category.
       StatsForYearComponent,
       SumOfSummedEntriesPipe,
       EntriesByActiveCategoryPipe,
+      GetCategoryTypePipe,
     ],
   exports: [
     HeaderComponent,
@@ -76,6 +78,7 @@ import { EntriesByActiveCategoryPipe } from './pipes/entries-by-active-category.
     TransactionsTableComponent,
     StatsForYearComponent,
     EntriesByActiveCategoryPipe,
+    GetCategoryTypePipe,
   ],
   imports: [
     CommonModule,
