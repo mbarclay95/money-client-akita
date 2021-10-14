@@ -26,7 +26,7 @@
     "dayjs": "^1.9.4",
     "echarts": "^4.9.0",
     "ng-zorro-antd": "^11.4.2",
-    "ng2-currency-mask": "^9.0.2",
+    "ng2-currency-mask": "^11.0.0",
     "ngx-echarts": "^5.2.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
