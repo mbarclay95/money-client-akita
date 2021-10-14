@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LastYearGraphComponent } from './last-year-graph.component';
 
@@ -6,7 +6,7 @@ describe('LastYearGraphComponent', () => {
   let component: LastYearGraphComponent;
   let fixture: ComponentFixture<LastYearGraphComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LastYearGraphComponent ]
     })

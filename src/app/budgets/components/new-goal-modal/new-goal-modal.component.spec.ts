@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NewGoalModalComponent } from './new-goal-modal.component';
 
@@ -6,7 +6,7 @@ describe('NewGoalModalComponent', () => {
   let component: NewGoalModalComponent;
   let fixture: ComponentFixture<NewGoalModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NewGoalModalComponent ]
     })
