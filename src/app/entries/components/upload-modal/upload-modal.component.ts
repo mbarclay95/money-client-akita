@@ -17,6 +17,7 @@ import {UploadTemplatesService} from '../../../upload-templates/state/upload-tem
 export class UploadModalComponent implements OnInit, OnDestroy {
   @Input() openModal: Observable<void>;
 
+  fileList = [];
   isVisible = false;
   fileUpload: FileUpload;
   selectedTemplate: UploadTemplate;
@@ -37,6 +38,7 @@ export class UploadModalComponent implements OnInit, OnDestroy {
     this.openModal.pipe(
       takeUntil(this.subscriptionDestroyer)
     ).subscribe(() => {
+      this.fileList = [];
       this.fileUpload = null;
       this.selectedTemplate = null;
       this.isVisible = true;

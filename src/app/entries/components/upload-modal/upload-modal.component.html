@@ -18,7 +18,7 @@
       <div class="d-flex w-100">
 
         <nz-upload class="w-100" nzType="drag" [nzMultiple]="false" [nzAction]="getUploadPath()" nzAccept=".csv"
-                   (nzChange)="handleChange($event)" [nzDisabled]="!!fileUpload">
+                   (nzChange)="handleChange($event)" [nzDisabled]="!!fileUpload" [(nzFileList)]="fileList">
 
           <p class="ant-upload-drag-icon">
             <i nz-icon nzType="inbox"></i>
