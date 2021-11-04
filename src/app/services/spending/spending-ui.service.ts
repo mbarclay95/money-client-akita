@@ -89,8 +89,8 @@ export class SpendingUiService {
     const uiState = this.spendingUiSubject.value;
     const date = this.dateFilterStoreService.getDate();
 
-    const startDate: string = dayjs().date(1).month(date.month).year(date.year - 1).format('YYYY-MM-DD');
-    const endDate: string = dayjs().date(1).month(date.month).year(date.year).format('YYYY-MM-DD');
+    const startDate: string = dayjs().date(1).month(date.month).year(date.year - 1).add(1, 'month').format('YYYY-MM-DD');
+    const endDate: string = dayjs().date(1).month(date.month).year(date.year).add(1, 'month').format('YYYY-MM-DD');
 
     let queryString = `startDate=${startDate}&endDate=${endDate}&`;
 

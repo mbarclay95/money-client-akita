@@ -50,8 +50,8 @@ export class EntriesService {
   }
 
   async getYearEntrySums(month: number, year: number, active: Category | SubCategory): Promise<SummedEntry[]> {
-    const startDate: string = dayjs().date(1).month(month).year(year - 1).format('YYYY-MM-DD');
-    const endDate: string = dayjs().date(1).month(month).year(year).format('YYYY-MM-DD');
+    const startDate: string = dayjs().date(1).month(month).year(year - 1).add(1, 'month').format('YYYY-MM-DD');
+    const endDate: string = dayjs().date(1).month(month).year(year).add(1, 'month').format('YYYY-MM-DD');
 
     let queryString = `startDate=${startDate}&endDate=${endDate}&`;
     queryString += ('savings' in active ? `categoryId=${active.id}` : `subCategoryId=${active.id}`);
